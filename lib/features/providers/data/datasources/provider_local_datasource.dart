@@ -18,8 +18,9 @@ class ProviderLocalDataSourceImpl implements ProviderLocalDataSource {
     this.shouldFail = false,
   });
 
-  final Duration latency;
-  final bool shouldFail;
+  // Not final: debug demo toggle (kDebugMode-gated) flips shouldFail/latency.
+  Duration latency;
+  bool shouldFail;
 
   @override
   Future<List<ProviderModel>> getProviders(ProviderFilter filter) async {
