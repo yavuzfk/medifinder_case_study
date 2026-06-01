@@ -28,37 +28,31 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  # The Cupertino Icons font, used with the CupertinoIcons class.
+  cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
   flutter_bloc: ^9.1.1
-  go_router: ^17.2.3
-  get_it: ^9.2.1
   freezed_annotation: ^3.0.0
-  json_annotation: any
+  get_it: ^9.2.1
+  go_router: ^17.2.3
   hive_ce: ^2.19.3
   hive_ce_flutter: ^2.3.4
   intl: ^0.20.2
+  json_annotation: any
+  stream_transform: ^2.1.1
 
 dev_dependencies:
+  bloc_test: any
+  build_runner: any
+  # flutter_lints provides the base lint set (superseded by very_good_analysis).
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^5.0.0
-  build_runner: any
   freezed: ^3.0.0
   json_serializable: any
-  very_good_analysis: any
   mocktail: any
-  bloc_test: any
+  very_good_analysis: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
