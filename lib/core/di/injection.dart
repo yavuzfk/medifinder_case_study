@@ -1,12 +1,12 @@
 import 'package:get_it/get_it.dart';
+import 'package:medifinder_case_study/features/providers/providers_di.dart';
 
 final GetIt getIt = GetIt.instance;
 
 /// main() içinde bir kez çağrılır.
 Future<void> configureDependencies() async {
   _registerCore();
-  // Feature kayıtları sonraki branch'lerde eklenir:
-  // registerProvidersFeature(getIt);
+  registerProvidersFeature(getIt);
 }
 
 void _registerCore() {
