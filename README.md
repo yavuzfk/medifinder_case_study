@@ -98,11 +98,20 @@ test('returns Failure.server when remote fails and cache is empty', () async {
 
 ## Offline & önbellek
 
+Bir istek hata verdiğinde ekran, Türkçe bir mesajla birlikte bir **Tekrar dene**
+butonu gösteriyor; bloc son isteği yineliyor.
+
 Remote her başarılı olduğunda tüm katalog Hive’a yazılıyor; sonraki bir istek
 hata verirse repository aynı filtreleme mantığıyla bu önbellekten okuyor, böylece
 arama, filtre ve detay çevrimdışıyken de çalışmaya devam ediyor. Veri önbellekten
 geldiğinde ekranın üstünde **“Çevrimdışı — önbellekten gösteriliyor”** çubuğu
 beliriyor.
+
+Gerçek bir backend olmadığı için “çevrimdışı” demek, mock’un hata fırlatması
+demek. Bunu canlı denemek için liste başlığında yalnızca debug derlemesinde
+görünen bir böcek ikonu (**“Çevrimdışı simüle et”**) var: dokununca mock hata
+verir hâle geliyor; böylece hem retry hem de önbellekten okuma + banner senaryosu
+yerinde görülebiliyor.
 
 ---
 
