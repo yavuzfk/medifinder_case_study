@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medifinder_case_study/core/di/injection.dart';
+import 'package:medifinder_case_study/core/theme/app_theme.dart';
 import 'package:medifinder_case_study/core/widgets/error_view.dart';
 import 'package:medifinder_case_study/core/widgets/loading_view.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider.dart';
@@ -20,7 +21,11 @@ class ProviderDetailPage extends StatelessWidget {
       create: (_) =>
           getIt<ProviderDetailBloc>()..add(ProviderDetailEvent.started(id)),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Provider Details')),
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.white,
+        ),
         body: BlocBuilder<ProviderDetailBloc, ProviderDetailState>(
           builder: (context, state) {
             return switch (state) {
@@ -63,98 +68,151 @@ class ProviderDetailContent extends StatelessWidget {
     ];
 
     return ListView(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: EdgeInsets.zero,
       children: [
-        Column(
-          children: [
-            CircleAvatar(
-              radius: 40,
-              backgroundColor: theme.colorScheme.secondaryContainer,
-              child: Icon(
-                p.type.icon,
-                size: 36,
-                color: theme.colorScheme.onSecondaryContainer,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                p.name,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.headlineSmall,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '${p.type.label} · ${p.category}',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-            if (p.rating != null) ...[
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.star, size: 18, color: theme.colorScheme.primary),
-                  const SizedBox(width: 4),
-                  Text(p.rating!.toStringAsFixed(1)),
-                ],
-              ),
-            ],
-          ],
-        ),
-        const SizedBox(height: 24),
-        const _SectionTitle('Location'),
-        ListTile(
-          leading: const Icon(Icons.place_outlined),
-          title: Text('${p.city}, ${p.country}'),
-          dense: true,
-        ),
-        const SizedBox(height: 8),
-        const _SectionTitle('Contact'),
-        if (contactRows.isEmpty)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            child: Text(
-              'No contact information available.',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          )
-        else
-          ...contactRows,
-        if (p.bio != null) ...[
-          const SizedBox(height: 8),
-          const _SectionTitle('About'),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(p.bio!, style: theme.textTheme.bodyLarge),
+        _Hero(provider: p),
+        const SizedBox(height: 16),
+        _Section(
+          title: 'Location',
+          child: _ContactRow(
+            icon: Icons.place_outlined,
+            value: '${p.city}, ${p.country}',
           ),
-        ],
+        ),
+        _Section(
+          title: 'Contact',
+          child: contactRows.isEmpty
+              ? Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    'No contact information available.',
+                    style: theme.textTheme.bodyMedium
+                        ?.copyWith(color: AppColors.inkMuted),
+                  ),
+                )
+              : Column(children: contactRows),
+        ),
+        if (p.bio != null)
+          _Section(
+            title: 'About',
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(p.bio!, style: theme.textTheme.bodyLarge),
+            ),
+          ),
+        const SizedBox(height: 24),
       ],
     );
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.title);
+class _Hero extends StatelessWidget {
+  const _Hero({required this.provider});
 
+  final Provider provider;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final p = provider;
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppColors.headerStart, AppColors.headerEnd],
+        ),
+      ),
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 44,
+                backgroundColor: Colors.white,
+                child: Icon(p.type.icon, size: 40, color: AppColors.primary),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                p.name,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 6),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 5,
+                  ),
+                  child: Text(
+                    '${p.type.label} · ${p.category}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              if (p.rating != null) ...[
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.star, size: 18, color: AppColors.star),
+                    const SizedBox(width: 4),
+                    Text(
+                      p.rating!.toStringAsFixed(1),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Section extends StatelessWidget {
+  const _Section({required this.title, required this.child});
   final String title;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-      child: Text(
-        title.toUpperCase(),
-        style: theme.textTheme.labelMedium?.copyWith(
-          color: theme.colorScheme.primary,
-          letterSpacing: 0.8,
-        ),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 4, bottom: 6),
+            child: Text(
+              title.toUpperCase(),
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: AppColors.primary,
+                letterSpacing: 0.8,
+              ),
+            ),
+          ),
+          Card(child: child),
+        ],
       ),
     );
   }
@@ -162,14 +220,13 @@ class _SectionTitle extends StatelessWidget {
 
 class _ContactRow extends StatelessWidget {
   const _ContactRow({required this.icon, required this.value});
-
   final IconData icon;
   final String value;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon),
+      leading: Icon(icon, color: AppColors.primary),
       title: Text(value),
       dense: true,
     );

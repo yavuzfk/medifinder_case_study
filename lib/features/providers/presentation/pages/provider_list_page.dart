@@ -4,15 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medifinder_case_study/core/di/injection.dart';
 import 'package:medifinder_case_study/core/router/app_routes.dart';
+import 'package:medifinder_case_study/core/theme/app_theme.dart';
 import 'package:medifinder_case_study/core/widgets/empty_view.dart';
 import 'package:medifinder_case_study/core/widgets/error_view.dart';
 import 'package:medifinder_case_study/core/widgets/loading_view.dart';
 import 'package:medifinder_case_study/features/providers/data/debug/mock_failure_toggle.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
+import 'package:medifinder_case_study/features/providers/domain/entities/provider_type.dart';
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_bloc.dart';
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_event.dart';
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_state.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/provider_card.dart';
+import 'package:medifinder_case_study/features/providers/presentation/widgets/type_chip.dart';
 
 class ProviderListPage extends StatelessWidget {
   const ProviderListPage({super.key});
@@ -36,6 +39,14 @@ class _ProviderListView extends StatefulWidget {
 
 class _ProviderListViewState extends State<_ProviderListView> {
   final _searchController = TextEditingController();
+  ProviderType? _selectedType; // yalnızca chip'lerle değişir
+
+  static const _types = <(ProviderType?, String)>[
+    (null, 'All'),
+    (ProviderType.doctor, 'Doctors'),
+    (ProviderType.clinic, 'Clinics'),
+    (ProviderType.hospital, 'Hospitals'),
+  ];
 
   @override
   void dispose() {
@@ -44,6 +55,11 @@ class _ProviderListViewState extends State<_ProviderListView> {
   }
 
   ProviderListBloc get _bloc => context.read<ProviderListBloc>();
+
+  void _selectType(ProviderType? type) {
+    setState(() => _selectedType = type);
+    _bloc.add(ProviderListEvent.typeSelected(type));
+  }
 
   Future<void> _openFilter() async {
     final filter = await context.pushNamed<ProviderFilter>(
@@ -58,45 +74,113 @@ class _ProviderListViewState extends State<_ProviderListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Providers'),
-        actions: [
-          if (kDebugMode)
-            IconButton(
-              tooltip: 'Toggle mock failure (debug)',
-              icon: const Icon(Icons.bug_report_outlined),
-              onPressed: () {
-                toggleMockFailure(getIt);
-                _bloc.add(const ProviderListEvent.refreshed());
-              },
-            ),
-          IconButton(
-            tooltip: 'Filter',
-            icon: const Icon(Icons.tune),
-            onPressed: _openFilter,
-          ),
-        ],
-      ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Search by name or specialty',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                isDense: true,
-              ),
-              onChanged: (value) =>
-                  _bloc.add(ProviderListEvent.searchChanged(value)),
+          _Header(
+            controller: _searchController,
+            onSearch: (v) => _bloc.add(ProviderListEvent.searchChanged(v)),
+            onFilter: _openFilter,
+            onDebugToggle: kDebugMode
+                ? () {
+                    toggleMockFailure(getIt);
+                    _bloc.add(const ProviderListEvent.refreshed());
+                  }
+                : null,
+          ),
+          SizedBox(
+            height: 56,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              itemCount: _types.length,
+              separatorBuilder: (_, _) => const SizedBox(width: 8),
+              itemBuilder: (context, i) {
+                final (type, label) = _types[i];
+                return TypeChip(
+                  label: label,
+                  selected: _selectedType == type,
+                  onTap: () => _selectType(type),
+                );
+              },
             ),
           ),
           const Expanded(child: _ProviderListBody()),
         ],
+      ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({
+    required this.controller,
+    required this.onSearch,
+    required this.onFilter,
+    this.onDebugToggle,
+  });
+
+  final TextEditingController controller;
+  final ValueChanged<String> onSearch;
+  final VoidCallback onFilter;
+  final VoidCallback? onDebugToggle;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppColors.headerStart, AppColors.headerEnd],
+        ),
+      ),
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Find a provider',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  if (onDebugToggle != null)
+                    IconButton(
+                      tooltip: 'Toggle mock failure (debug)',
+                      onPressed: onDebugToggle,
+                      icon: const Icon(
+                        Icons.bug_report_outlined,
+                        color: Colors.white,
+                      ),
+                    ),
+                  IconButton(
+                    tooltip: 'Filter',
+                    onPressed: onFilter,
+                    icon: const Icon(Icons.tune, color: Colors.white),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              TextField(
+                controller: controller,
+                onChanged: onSearch,
+                decoration: const InputDecoration(
+                  hintText: 'Search by name or specialty',
+                  prefixIcon: Icon(Icons.search),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -126,7 +210,7 @@ class _ProviderListBody extends StatelessWidget {
                   .read<ProviderListBloc>()
                   .add(const ProviderListEvent.refreshed()),
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
                 itemCount: providers.length,
                 itemBuilder: (context, index) {
                   final provider = providers[index];

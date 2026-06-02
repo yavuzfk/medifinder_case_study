@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProviderFilter {
 
- String get query; String? get country; String? get city; String? get category;
+ String get query; ProviderType? get type; String? get country; String? get city; String? get category;
 /// Create a copy of ProviderFilter
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ProviderFilterCopyWith<ProviderFilter> get copyWith => _$ProviderFilterCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProviderFilter&&(identical(other.query, query) || other.query == query)&&(identical(other.country, country) || other.country == country)&&(identical(other.city, city) || other.city == city)&&(identical(other.category, category) || other.category == category));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProviderFilter&&(identical(other.query, query) || other.query == query)&&(identical(other.type, type) || other.type == type)&&(identical(other.country, country) || other.country == country)&&(identical(other.city, city) || other.city == city)&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,query,country,city,category);
+int get hashCode => Object.hash(runtimeType,query,type,country,city,category);
 
 @override
 String toString() {
-  return 'ProviderFilter(query: $query, country: $country, city: $city, category: $category)';
+  return 'ProviderFilter(query: $query, type: $type, country: $country, city: $city, category: $category)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ProviderFilterCopyWith<$Res>  {
   factory $ProviderFilterCopyWith(ProviderFilter value, $Res Function(ProviderFilter) _then) = _$ProviderFilterCopyWithImpl;
 @useResult
 $Res call({
- String query, String? country, String? city, String? category
+ String query, ProviderType? type, String? country, String? city, String? category
 });
 
 
@@ -62,10 +62,11 @@ class _$ProviderFilterCopyWithImpl<$Res>
 
 /// Create a copy of ProviderFilter
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? query = null,Object? country = freezed,Object? city = freezed,Object? category = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? query = null,Object? type = freezed,Object? country = freezed,Object? city = freezed,Object? category = freezed,}) {
   return _then(_self.copyWith(
 query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
-as String,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+as String,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as ProviderType?,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
 as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String?,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -153,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String query,  String? country,  String? city,  String? category)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String query,  ProviderType? type,  String? country,  String? city,  String? category)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProviderFilter() when $default != null:
-return $default(_that.query,_that.country,_that.city,_that.category);case _:
+return $default(_that.query,_that.type,_that.country,_that.city,_that.category);case _:
   return orElse();
 
 }
@@ -174,10 +175,10 @@ return $default(_that.query,_that.country,_that.city,_that.category);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String query,  String? country,  String? city,  String? category)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String query,  ProviderType? type,  String? country,  String? city,  String? category)  $default,) {final _that = this;
 switch (_that) {
 case _ProviderFilter():
-return $default(_that.query,_that.country,_that.city,_that.category);case _:
+return $default(_that.query,_that.type,_that.country,_that.city,_that.category);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +195,10 @@ return $default(_that.query,_that.country,_that.city,_that.category);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String query,  String? country,  String? city,  String? category)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String query,  ProviderType? type,  String? country,  String? city,  String? category)?  $default,) {final _that = this;
 switch (_that) {
 case _ProviderFilter() when $default != null:
-return $default(_that.query,_that.country,_that.city,_that.category);case _:
+return $default(_that.query,_that.type,_that.country,_that.city,_that.category);case _:
   return null;
 
 }
@@ -209,10 +210,11 @@ return $default(_that.query,_that.country,_that.city,_that.category);case _:
 
 
 class _ProviderFilter implements ProviderFilter {
-  const _ProviderFilter({this.query = '', this.country, this.city, this.category});
+  const _ProviderFilter({this.query = '', this.type, this.country, this.city, this.category});
   
 
 @override@JsonKey() final  String query;
+@override final  ProviderType? type;
 @override final  String? country;
 @override final  String? city;
 @override final  String? category;
@@ -227,16 +229,16 @@ _$ProviderFilterCopyWith<_ProviderFilter> get copyWith => __$ProviderFilterCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProviderFilter&&(identical(other.query, query) || other.query == query)&&(identical(other.country, country) || other.country == country)&&(identical(other.city, city) || other.city == city)&&(identical(other.category, category) || other.category == category));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProviderFilter&&(identical(other.query, query) || other.query == query)&&(identical(other.type, type) || other.type == type)&&(identical(other.country, country) || other.country == country)&&(identical(other.city, city) || other.city == city)&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,query,country,city,category);
+int get hashCode => Object.hash(runtimeType,query,type,country,city,category);
 
 @override
 String toString() {
-  return 'ProviderFilter(query: $query, country: $country, city: $city, category: $category)';
+  return 'ProviderFilter(query: $query, type: $type, country: $country, city: $city, category: $category)';
 }
 
 
@@ -247,7 +249,7 @@ abstract mixin class _$ProviderFilterCopyWith<$Res> implements $ProviderFilterCo
   factory _$ProviderFilterCopyWith(_ProviderFilter value, $Res Function(_ProviderFilter) _then) = __$ProviderFilterCopyWithImpl;
 @override @useResult
 $Res call({
- String query, String? country, String? city, String? category
+ String query, ProviderType? type, String? country, String? city, String? category
 });
 
 
@@ -264,10 +266,11 @@ class __$ProviderFilterCopyWithImpl<$Res>
 
 /// Create a copy of ProviderFilter
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? query = null,Object? country = freezed,Object? city = freezed,Object? category = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? query = null,Object? type = freezed,Object? country = freezed,Object? city = freezed,Object? category = freezed,}) {
   return _then(_ProviderFilter(
 query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
-as String,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+as String,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as ProviderType?,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
 as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String?,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String?,

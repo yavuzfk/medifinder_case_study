@@ -15,9 +15,9 @@ void main() {
   testWidgets('list screen shows loading, then provider cards', (tester) async {
     await tester.pumpWidget(const MediFinderApp());
 
-    // İlk frame: appbar başlığı + loading (mock 700ms gecikme).
+    // İlk frame: header başlığı + loading (mock 700ms gecikme).
     await tester.pump();
-    expect(find.text('Providers'), findsOneWidget);
+    expect(find.text('Find a provider'), findsOneWidget);
     expect(find.byType(LoadingView), findsOneWidget);
 
     // Mock latency sonrası loaded → kartlar render olur.

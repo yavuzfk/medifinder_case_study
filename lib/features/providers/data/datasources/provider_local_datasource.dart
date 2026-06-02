@@ -51,10 +51,15 @@ class ProviderLocalDataSourceImpl implements ProviderLocalDataSource {
     final matchesQuery = q.isEmpty ||
         p.name.toLowerCase().contains(q) ||
         p.category.toLowerCase().contains(q);
+    final matchesType = f.type == null || p.type == f.type!.name;
     final matchesCountry = f.country == null || p.country == f.country;
     final matchesCity = f.city == null || p.city == f.city;
     final matchesCategory = f.category == null || p.category == f.category;
-    return matchesQuery && matchesCountry && matchesCity && matchesCategory;
+    return matchesQuery &&
+        matchesType &&
+        matchesCountry &&
+        matchesCity &&
+        matchesCategory;
   }
 }
 

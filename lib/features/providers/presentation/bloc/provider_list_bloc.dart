@@ -16,6 +16,7 @@ class ProviderListBloc extends Bloc<ProviderListEvent, ProviderListState> {
       _onSearchChanged,
       transformer: _debounce(const Duration(milliseconds: 300)),
     );
+    on<ProviderListTypeSelected>(_onTypeSelected);
     on<ProviderListFilterChanged>(_onFilterChanged);
     on<ProviderListRefreshed>(_onRefreshed);
   }
@@ -39,12 +40,20 @@ class ProviderListBloc extends Bloc<ProviderListEvent, ProviderListState> {
     return _load(emit);
   }
 
+  Future<void> _onTypeSelected(
+    ProviderListTypeSelected event,
+    Emitter<ProviderListState> emit,
+  ) {
+    _filter = _filter.copyWith(type: event.type);
+    return _load(emit);
+  }
+
   Future<void> _onFilterChanged(
     ProviderListFilterChanged event,
     Emitter<ProviderListState> emit,
   ) {
-    // Filtre değişse de mevcut arama sorgusunu koru.
-    _filter = event.filter.copyWith(query: _filter.query);
+    // Filtre ekranı tip/arama'ya dokunmaz; ikisini de koru.
+    _filter = event.filter.copyWith(query: _filter.query, type: _filter.type);
     return _load(emit);
   }
 

@@ -20,7 +20,6 @@ class MediFinderApp extends StatelessWidget {
       title: 'MediFinder',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
       routerConfig: appRouter,
     );
   }
