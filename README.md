@@ -8,8 +8,8 @@ servisi taklit eden mock veri kaynağından gelir.
 
 ## Demo
 
-▶️ **[Uygulama tanıtımı — ekran kaydı](docs/demo.mp4)** — bağlantı GitHub'ın
-oynatıcısında açılır.
+▶️ **[Uygulama tanıtımı — ekran kaydı](docs/demo.mp4)** — GitHub
+oynatıcı videoyu açmazsa indirip izleyebilirsiniz.
 
 ---
 
