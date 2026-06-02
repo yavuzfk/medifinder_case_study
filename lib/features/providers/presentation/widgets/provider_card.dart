@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider.dart';
-import 'package:medifinder_case_study/features/providers/domain/entities/provider_type.dart';
+import 'package:medifinder_case_study/features/providers/presentation/widgets/provider_type_x.dart';
 
 class ProviderCard extends StatelessWidget {
   const ProviderCard({
@@ -22,7 +22,7 @@ class ProviderCard extends StatelessWidget {
         leading: CircleAvatar(
           backgroundColor: theme.colorScheme.secondaryContainer,
           child: Icon(
-            _iconFor(provider.type),
+            provider.type.icon,
             color: theme.colorScheme.onSecondaryContainer,
           ),
         ),
@@ -49,10 +49,4 @@ class ProviderCard extends StatelessWidget {
       ),
     );
   }
-
-  IconData _iconFor(ProviderType type) => switch (type) {
-        ProviderType.doctor => Icons.person_outline,
-        ProviderType.clinic => Icons.local_hospital_outlined,
-        ProviderType.hospital => Icons.apartment_outlined,
-      };
 }
