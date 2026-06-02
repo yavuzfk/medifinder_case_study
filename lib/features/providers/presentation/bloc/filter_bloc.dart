@@ -45,7 +45,6 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
   ) {
     final s = state;
     if (s is! FilterReady) return;
-    // Cascading: ülke değişince şehir sıfırlanır.
     emit(s.copyWith(country: event.country, city: null));
   }
 

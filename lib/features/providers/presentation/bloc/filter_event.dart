@@ -5,7 +5,6 @@ part 'filter_event.freezed.dart';
 
 @freezed
 sealed class FilterEvent with _$FilterEvent {
-  // initial: listeden gelen mevcut filtre (pre-population)
   const factory FilterEvent.started(ProviderFilter initial) = FilterStarted;
   const factory FilterEvent.countrySelected(String? country) =
       FilterCountrySelected;

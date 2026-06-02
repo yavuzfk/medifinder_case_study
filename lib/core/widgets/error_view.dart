@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:medifinder_case_study/core/theme/app_icon_size.dart';
+import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 
 class ErrorView extends StatelessWidget {
   const ErrorView({
@@ -17,19 +19,23 @@ class ErrorView extends StatelessWidget {
     final theme = Theme.of(context);
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppSpacing.extraLarge),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 48, color: theme.colorScheme.error),
-            const SizedBox(height: 16),
+            Icon(
+              icon,
+              size: AppIconSize.extraLarge,
+              color: theme.colorScheme.error,
+            ),
+            const SizedBox(height: AppSpacing.large),
             Text(
               message,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyLarge,
             ),
             if (onRetry != null) ...[
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.extraLarge),
               FilledButton.tonalIcon(
                 onPressed: onRetry,
                 icon: const Icon(Icons.refresh),

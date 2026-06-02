@@ -1,11 +1,5 @@
 import 'package:medifinder_case_study/core/error/failure.dart';
 
-/// Repository / usecase dönüş tipi.
-/// Pattern matching ile tüketilir:
-/// switch (result) {
-///   case Success(:final data): ...
-///   case ResultFailure(:final failure): ...
-/// }
 sealed class Result<T> {
   const Result();
 }
@@ -20,6 +14,4 @@ final class ResultFailure<T> extends Result<T> {
   final Failure failure;
 }
 
-/// Bir değeri, cache'ten mi (bayat) yoksa canlı mı geldiği bilgisiyle taşır.
-/// Offline fallback'te UI'a "çevrimdışı" göstergesi sunmak için kullanılır.
 typedef Cached<T> = ({T value, bool fromCache});

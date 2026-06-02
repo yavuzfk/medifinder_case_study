@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medifinder_case_study/core/di/injection.dart';
-import 'package:medifinder_case_study/core/theme/app_theme.dart';
+import 'package:medifinder_case_study/core/theme/app_colors.dart';
+import 'package:medifinder_case_study/core/theme/app_icon_size.dart';
+import 'package:medifinder_case_study/core/theme/app_radii.dart';
+import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 import 'package:medifinder_case_study/core/widgets/error_view.dart';
 import 'package:medifinder_case_study/core/widgets/loading_view.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider.dart';
@@ -47,8 +50,6 @@ class ProviderDetailPage extends StatelessWidget {
   }
 }
 
-/// Bloc'tan bağımsız, saf görünüm. Null-handling'i widget testiyle
-/// doğrulanabilir kılmak için ayrıldı.
 class ProviderDetailContent extends StatelessWidget {
   const ProviderDetailContent({
     required this.provider,
@@ -78,7 +79,7 @@ class ProviderDetailContent extends StatelessWidget {
       children: [
         _Hero(provider: p),
         if (fromCache) const OfflineBanner(),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.large),
         _Section(
           title: 'Konum',
           child: _ContactRow(
@@ -90,7 +91,7 @@ class ProviderDetailContent extends StatelessWidget {
           title: 'İletişim',
           child: contactRows.isEmpty
               ? Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(AppSpacing.large),
                   child: Text(
                     'İletişim bilgisi bulunmuyor.',
                     style: theme.textTheme.bodyMedium
@@ -103,11 +104,11 @@ class ProviderDetailContent extends StatelessWidget {
           _Section(
             title: 'Hakkında',
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.large),
               child: Text(p.bio!, style: theme.textTheme.bodyLarge),
             ),
           ),
-        const SizedBox(height: 24),
+        const SizedBox(height: AppSpacing.extraLarge),
       ],
     );
   }
@@ -117,6 +118,16 @@ class _Hero extends StatelessWidget {
   const _Hero({required this.provider});
 
   final Provider provider;
+
+  static const _padding = EdgeInsets.fromLTRB(
+    AppSpacing.large,
+    AppSpacing.small,
+    AppSpacing.large,
+    AppSpacing.extraLarge,
+  );
+  static const _avatarRadius = 44.0;
+  static const _nameTagGap = 6.0;
+  static const _tagPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 5);
 
   @override
   Widget build(BuildContext context) {
@@ -133,15 +144,19 @@ class _Hero extends StatelessWidget {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+          padding: _padding,
           child: Column(
             children: [
               CircleAvatar(
-                radius: 44,
+                radius: _avatarRadius,
                 backgroundColor: Colors.white,
-                child: Icon(p.type.icon, size: 40, color: AppColors.primary),
+                child: Icon(
+                  p.type.icon,
+                  size: AppIconSize.large,
+                  color: AppColors.primary,
+                ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.medium),
               Text(
                 p.name,
                 textAlign: TextAlign.center,
@@ -150,17 +165,14 @@ class _Hero extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: _nameTagGap),
               DecoratedBox(
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(AppRadii.tag),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 5,
-                  ),
+                  padding: _tagPadding,
                   child: Text(
                     '${p.type.label} · ${p.category}',
                     style: const TextStyle(
@@ -171,12 +183,16 @@ class _Hero extends StatelessWidget {
                 ),
               ),
               if (p.rating != null) ...[
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.medium),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.star, size: 18, color: AppColors.star),
-                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.star,
+                      size: AppIconSize.small,
+                      color: AppColors.star,
+                    ),
+                    const SizedBox(width: AppSpacing.extraSmall),
                     Text(
                       p.rating!.toStringAsFixed(1),
                       style: const TextStyle(
@@ -200,16 +216,24 @@ class _Section extends StatelessWidget {
   final String title;
   final Widget child;
 
+  static const _padding = EdgeInsets.fromLTRB(
+    AppSpacing.large,
+    AppSpacing.small,
+    AppSpacing.large,
+    AppSpacing.small,
+  );
+  static const _labelPadding = EdgeInsets.only(left: 4, bottom: 6);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      padding: _padding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 4, bottom: 6),
+            padding: _labelPadding,
             child: Text(
               title.toUpperCase(),
               style: theme.textTheme.labelMedium?.copyWith(

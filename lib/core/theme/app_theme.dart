@@ -1,19 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-abstract final class AppColors {
-  const AppColors._();
-  static const primary = Color(0xFF2F5BEA);
-  static const headerStart = Color(0xFF4F7DF6);
-  static const headerEnd = Color(0xFF2342C9);
-  static const tagBg = Color(0xFFEAF0FE);
-  static const tagText = Color(0xFF1E40AF);
-  static const scaffold = Color(0xFFF4F6FB);
-  static const border = Color(0xFFE6EAF1);
-  static const star = Color(0xFFF5A623);
-  static const ink = Color(0xFF0F172A);
-  static const inkMuted = Color(0xFF64748B);
-}
+import 'package:medifinder_case_study/core/theme/app_colors.dart';
+import 'package:medifinder_case_study/core/theme/app_radii.dart';
 
 abstract final class AppTheme {
   const AppTheme._();
@@ -24,8 +12,9 @@ abstract final class AppTheme {
     ).copyWith(surface: Colors.white);
 
     final base = ThemeData(useMaterial3: true, colorScheme: scheme);
-    final textTheme = GoogleFonts.interTextTheme(base.textTheme)
-        .apply(bodyColor: AppColors.ink, displayColor: AppColors.ink);
+    final textTheme = GoogleFonts.interTextTheme(
+      base.textTheme,
+    ).apply(bodyColor: AppColors.ink, displayColor: AppColors.ink);
 
     return base.copyWith(
       scaffoldBackgroundColor: AppColors.scaffold,
@@ -44,7 +33,7 @@ abstract final class AppTheme {
         surfaceTintColor: Colors.transparent,
         margin: EdgeInsets.zero,
         clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: _rounded(AppRadii.card),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -55,33 +44,33 @@ abstract final class AppTheme {
         ),
         prefixIconColor: AppColors.primary,
         hintStyle: const TextStyle(color: AppColors.inkMuted),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+        border: _fieldBorder(),
+        enabledBorder: _fieldBorder(),
+        focusedBorder: _fieldBorder(
+          const BorderSide(color: AppColors.primary, width: 1.5),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: const Size.fromHeight(52),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          shape: _rounded(AppRadii.field),
           textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
       dividerTheme: const DividerThemeData(
-        color: Color(0xFFEDF0F5),
+        color: AppColors.divider,
         space: 1,
         thickness: 1,
       ),
     );
   }
+
+  static RoundedRectangleBorder _rounded(double radius) =>
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius));
+
+  static OutlineInputBorder _fieldBorder([BorderSide side = BorderSide.none]) =>
+      OutlineInputBorder(
+        borderRadius: BorderRadius.circular(AppRadii.field),
+        borderSide: side,
+      );
 }

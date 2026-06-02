@@ -26,7 +26,6 @@ void main() {
     remote = _MockRemote();
     cache = _MockCache();
     repository = ProviderRepositoryImpl(remote, cache);
-    // Varsayılan: cache boş (offline fallback olmasın).
     when(() => cache.readCatalog()).thenReturn(const []);
     when(() => cache.saveCatalog(any())).thenAnswer((_) async {});
   });

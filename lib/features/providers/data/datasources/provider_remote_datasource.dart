@@ -7,18 +7,12 @@ abstract interface class ProviderRemoteDataSource {
   Future<ProviderModel> getProviderById(String id);
 }
 
-/// "Akıllı" mock: gerçek bir backend'i taklit eder.
-/// - latency  → loading state görünür
-/// - shouldFail → throw → error/retry state'i demo edilebilir + testte hata mapping
-/// - filtre kombinasyonu → boş sonuç → empty state
-/// Veri setinde bilinçli null alanlar var → detail'de null handling.
 class ProviderRemoteDataSourceImpl implements ProviderRemoteDataSource {
   ProviderRemoteDataSourceImpl({
     this.latency = const Duration(milliseconds: 700),
     this.shouldFail = false,
   });
 
-  // Not final: debug demo toggle (kDebugMode-gated) flips shouldFail/latency.
   Duration latency;
   bool shouldFail;
 
@@ -47,7 +41,6 @@ class ProviderRemoteDataSourceImpl implements ProviderRemoteDataSource {
   }
 }
 
-/// Hem mock remote hem de offline cache fallback'i aynı kuralla filtreler.
 bool providerMatchesFilter(ProviderModel p, ProviderFilter f) {
   final q = f.query.trim().toLowerCase();
   final matchesQuery = q.isEmpty ||

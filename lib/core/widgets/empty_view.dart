@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:medifinder_case_study/core/theme/app_icon_size.dart';
+import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 
 class EmptyView extends StatelessWidget {
   const EmptyView({
@@ -15,12 +17,16 @@ class EmptyView extends StatelessWidget {
     final theme = Theme.of(context);
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppSpacing.extraLarge),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 48, color: theme.colorScheme.outline),
-            const SizedBox(height: 16),
+            Icon(
+              icon,
+              size: AppIconSize.extraLarge,
+              color: theme.colorScheme.outline,
+            ),
+            const SizedBox(height: AppSpacing.large),
             Text(
               message,
               textAlign: TextAlign.center,

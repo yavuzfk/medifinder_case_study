@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 
 class LoadingView extends StatelessWidget {
   const LoadingView({this.message, super.key});
@@ -12,7 +13,7 @@ class LoadingView extends StatelessWidget {
         children: [
           const CircularProgressIndicator(),
           if (message != null) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.large),
             Text(message!, textAlign: TextAlign.center),
           ],
         ],

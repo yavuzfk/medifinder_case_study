@@ -34,7 +34,6 @@ void main() {
     category: 'Cardiology',
     country: 'United States',
     city: 'New York',
-    // rating/phone/email/website/bio hepsi null
   );
 
   group('ProviderDetailBloc', () {
@@ -86,8 +85,8 @@ void main() {
       expect(find.text('Manhattan Heart Clinic'), findsOneWidget);
       expect(find.text('İletişim bilgisi bulunmuyor.'), findsOneWidget);
       expect(find.byIcon(Icons.phone_outlined), findsNothing);
-      expect(find.text('HAKKINDA'), findsNothing); // bio yok → bölüm yok
-      expect(find.byIcon(Icons.star), findsNothing); // rating yok
+      expect(find.text('HAKKINDA'), findsNothing);
+      expect(find.byIcon(Icons.star), findsNothing);
     });
 
     testWidgets('renders present fields', (tester) async {

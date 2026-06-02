@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:medifinder_case_study/core/theme/app_theme.dart';
+import 'package:medifinder_case_study/core/theme/app_colors.dart';
+import 'package:medifinder_case_study/core/theme/app_icon_size.dart';
+import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 
-/// Veri cache'ten (bayat) gösterilirken üstte beliren ince çubuk.
 class OfflineBanner extends StatelessWidget {
   const OfflineBanner({super.key});
 
@@ -10,11 +11,18 @@ class OfflineBanner extends StatelessWidget {
     return ColoredBox(
       color: AppColors.star.withValues(alpha: 0.16),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.large,
+          vertical: AppSpacing.small,
+        ),
         child: Row(
           children: [
-            const Icon(Icons.cloud_off_outlined, size: 18, color: AppColors.ink),
-            const SizedBox(width: 8),
+            const Icon(
+              Icons.cloud_off_outlined,
+              size: AppIconSize.small,
+              color: AppColors.ink,
+            ),
+            const SizedBox(width: AppSpacing.small),
             Expanded(
               child: Text(
                 'Çevrimdışı — önbellekten gösteriliyor',

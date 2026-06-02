@@ -10,7 +10,7 @@ abstract class ProviderModel with _$ProviderModel {
   const factory ProviderModel({
     required String id,
     required String name,
-    required String type, // JSON'da string; entity'de enum'a map'lenir
+    required String type,
     required String category,
     required String country,
     required String city,
@@ -22,7 +22,6 @@ abstract class ProviderModel with _$ProviderModel {
     String? imageUrl,
   }) = _ProviderModel;
 
-  // metot eklediğimiz için zorunlu (freezed 3.x)
   const ProviderModel._();
 
   factory ProviderModel.fromJson(Map<String, dynamic> json) =>

@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medifinder_case_study/core/di/injection.dart';
 import 'package:medifinder_case_study/core/router/app_routes.dart';
-import 'package:medifinder_case_study/core/theme/app_theme.dart';
+import 'package:medifinder_case_study/core/theme/app_colors.dart';
+import 'package:medifinder_case_study/core/theme/app_radii.dart';
+import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 import 'package:medifinder_case_study/core/widgets/empty_view.dart';
 import 'package:medifinder_case_study/core/widgets/error_view.dart';
 import 'package:medifinder_case_study/features/providers/data/debug/mock_failure_toggle.dart';
@@ -18,6 +20,13 @@ import 'package:medifinder_case_study/features/providers/presentation/widgets/of
 import 'package:medifinder_case_study/features/providers/presentation/widgets/provider_card.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/type_chip.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+const _listPadding = EdgeInsets.fromLTRB(
+  0,
+  AppSpacing.extraSmall,
+  0,
+  AppSpacing.large,
+);
 
 class ProviderListPage extends StatelessWidget {
   const ProviderListPage({super.key});
@@ -41,7 +50,7 @@ class _ProviderListView extends StatefulWidget {
 
 class _ProviderListViewState extends State<_ProviderListView> {
   final _searchController = TextEditingController();
-  ProviderType? _selectedType; // yalnızca chip'lerle değişir
+  ProviderType? _selectedType;
 
   static const _types = <(ProviderType?, String)>[
     (null, 'Tümü'),
@@ -49,6 +58,12 @@ class _ProviderListViewState extends State<_ProviderListView> {
     (ProviderType.clinic, 'Klinikler'),
     (ProviderType.hospital, 'Hastaneler'),
   ];
+
+  static const _chipRowHeight = 56.0;
+  static const _chipRowPadding = EdgeInsets.symmetric(
+    horizontal: AppSpacing.large,
+    vertical: 10,
+  );
 
   @override
   void dispose() {
@@ -90,12 +105,12 @@ class _ProviderListViewState extends State<_ProviderListView> {
                 : null,
           ),
           SizedBox(
-            height: 56,
+            height: _chipRowHeight,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: _chipRowPadding,
               itemCount: _types.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 8),
+              separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.small),
               itemBuilder: (context, i) {
                 final (type, label) = _types[i];
                 return TypeChip(
@@ -126,6 +141,10 @@ class _Header extends StatelessWidget {
   final VoidCallback onFilter;
   final VoidCallback? onDebugToggle;
 
+  static const _padding = EdgeInsets.fromLTRB(20, 8, 12, 22);
+  static const _titleGap = 2.0;
+  static const _searchGap = 14.0;
+
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -135,12 +154,14 @@ class _Header extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [AppColors.headerStart, AppColors.headerEnd],
         ),
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(28)),
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(AppRadii.header),
+        ),
       ),
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 12, 22),
+          padding: _padding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -158,7 +179,7 @@ class _Header extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        SizedBox(height: 2),
+                        SizedBox(height: _titleGap),
                         Text(
                           'Güvenilir doktorlar, klinikler ve hastaneler',
                           style: TextStyle(color: Colors.white70, fontSize: 13),
@@ -182,10 +203,10 @@ class _Header extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: _searchGap),
               DecoratedBox(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(AppRadii.field),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.10),
@@ -241,7 +262,7 @@ class _ProviderListBody extends StatelessWidget {
                         .read<ProviderListBloc>()
                         .add(const ProviderListEvent.refreshed()),
                     child: ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
+                      padding: _listPadding,
                       itemCount: providers.length,
                       itemBuilder: (context, index) {
                         final provider = providers[index];
@@ -264,7 +285,6 @@ class _ProviderListBody extends StatelessWidget {
   }
 }
 
-/// Loading state'inde gerçek kart düzenini taklit eden iskelet liste.
 class _ProviderListSkeleton extends StatelessWidget {
   const _ProviderListSkeleton();
 
@@ -281,7 +301,7 @@ class _ProviderListSkeleton extends StatelessWidget {
     );
     return Skeletonizer(
       child: ListView.builder(
-        padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
+        padding: _listPadding,
         itemCount: 6,
         itemBuilder: (_, _) => ProviderCard(provider: fake, onTap: () {}),
       ),

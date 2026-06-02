@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medifinder_case_study/core/theme/app_theme.dart';
+import 'package:medifinder_case_study/core/theme/app_colors.dart';
+import 'package:medifinder_case_study/core/theme/app_radii.dart';
 
 class TypeChip extends StatelessWidget {
   const TypeChip({
@@ -13,19 +14,21 @@ class TypeChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
+  static const _padding = EdgeInsets.symmetric(horizontal: 18, vertical: 9);
+
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(AppRadii.chip),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
+          padding: _padding,
           decoration: BoxDecoration(
             color: selected ? AppColors.primary : Colors.white,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(AppRadii.chip),
             border: Border.all(
               color: selected ? AppColors.primary : AppColors.border,
             ),

@@ -1,4 +1,3 @@
-/// Brief'teki "People & Places": provider hem kişi hem kurum olabilir.
 enum ProviderType {
   doctor,
   clinic,
