@@ -43,10 +43,10 @@ class _ProviderListViewState extends State<_ProviderListView> {
   ProviderType? _selectedType; // yalnızca chip'lerle değişir
 
   static const _types = <(ProviderType?, String)>[
-    (null, 'All'),
-    (ProviderType.doctor, 'Doctors'),
-    (ProviderType.clinic, 'Clinics'),
-    (ProviderType.hospital, 'Hospitals'),
+    (null, 'Tümü'),
+    (ProviderType.doctor, 'Doktorlar'),
+    (ProviderType.clinic, 'Klinikler'),
+    (ProviderType.hospital, 'Hastaneler'),
   ];
 
   @override
@@ -150,7 +150,7 @@ class _Header extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Find a provider',
+                          'Sağlık hizmeti bul',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,
@@ -159,7 +159,7 @@ class _Header extends StatelessWidget {
                         ),
                         SizedBox(height: 2),
                         Text(
-                          'Trusted doctors, clinics & hospitals',
+                          'Güvenilir doktorlar, klinikler ve hastaneler',
                           style: TextStyle(color: Colors.white70, fontSize: 13),
                         ),
                       ],
@@ -167,7 +167,7 @@ class _Header extends StatelessWidget {
                   ),
                   if (onDebugToggle != null)
                     IconButton(
-                      tooltip: 'Toggle mock failure (debug)',
+                      tooltip: 'Sahte hatayı aç/kapat (debug)',
                       onPressed: onDebugToggle,
                       icon: const Icon(
                         Icons.bug_report_outlined,
@@ -175,7 +175,7 @@ class _Header extends StatelessWidget {
                       ),
                     ),
                   IconButton(
-                    tooltip: 'Filter',
+                    tooltip: 'Filtrele',
                     onPressed: onFilter,
                     icon: const Icon(Icons.tune, color: Colors.white),
                   ),
@@ -197,7 +197,7 @@ class _Header extends StatelessWidget {
                   controller: controller,
                   onChanged: onSearch,
                   decoration: const InputDecoration(
-                    hintText: 'Search by name or specialty',
+                    hintText: 'İsim veya branşa göre ara',
                     prefixIcon: Icon(Icons.search),
                   ),
                 ),
@@ -223,7 +223,7 @@ class _ProviderListBody extends StatelessWidget {
             const _ProviderListSkeleton(),
           ProviderListEmpty() => const EmptyView(
               message:
-                  'No providers found.\nTry adjusting your search or filters.',
+                  'Sonuç bulunamadı.\nAramanı veya filtreleri değiştirmeyi dene.',
             ),
           ProviderListError(:final message) => ErrorView(
               message: message,

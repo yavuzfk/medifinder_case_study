@@ -73,19 +73,19 @@ class ProviderDetailContent extends StatelessWidget {
         _Hero(provider: p),
         const SizedBox(height: 16),
         _Section(
-          title: 'Location',
+          title: 'Konum',
           child: _ContactRow(
             icon: Icons.place_outlined,
             value: '${p.city}, ${p.country}',
           ),
         ),
         _Section(
-          title: 'Contact',
+          title: 'İletişim',
           child: contactRows.isEmpty
               ? Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    'No contact information available.',
+                    'İletişim bilgisi bulunmuyor.',
                     style: theme.textTheme.bodyMedium
                         ?.copyWith(color: AppColors.inkMuted),
                   ),
@@ -94,7 +94,7 @@ class ProviderDetailContent extends StatelessWidget {
         ),
         if (p.bio != null)
           _Section(
-            title: 'About',
+            title: 'Hakkında',
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Text(p.bio!, style: theme.textTheme.bodyLarge),

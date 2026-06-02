@@ -78,9 +78,9 @@ class ProviderListBloc extends Bloc<ProviderListEvent, ProviderListState> {
   }
 
   String _messageFor(Failure failure) => switch (failure) {
-        NetworkFailure() => 'No internet connection. Please try again.',
-        ServerFailure() => 'Something went wrong. Please try again.',
-        _ => 'Unexpected error. Please try again.',
+        NetworkFailure() => 'İnternet bağlantısı yok. Lütfen tekrar deneyin.',
+        ServerFailure() => 'Bir şeyler ters gitti. Lütfen tekrar deneyin.',
+        _ => 'Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.',
       };
 }
 

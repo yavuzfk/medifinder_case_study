@@ -71,8 +71,8 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
   }
 
   String _messageFor(Failure failure) => switch (failure) {
-        NetworkFailure() => 'No internet connection. Please try again.',
-        ServerFailure() => 'Could not load filters. Please try again.',
-        _ => 'Unexpected error. Please try again.',
+        NetworkFailure() => 'İnternet bağlantısı yok. Lütfen tekrar deneyin.',
+        ServerFailure() => 'Filtreler yüklenemedi. Lütfen tekrar deneyin.',
+        _ => 'Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.',
       };
 }

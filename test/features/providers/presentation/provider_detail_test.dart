@@ -65,7 +65,7 @@ void main() {
       act: (bloc) => bloc.add(const ProviderDetailEvent.started('x')),
       expect: () => [
         const ProviderDetailState.loading(),
-        const ProviderDetailState.error('Provider not found.'),
+        const ProviderDetailState.error('Kayıt bulunamadı.'),
       ],
     );
   });
@@ -83,9 +83,9 @@ void main() {
       await pump(tester, sparse);
 
       expect(find.text('Manhattan Heart Clinic'), findsOneWidget);
-      expect(find.text('No contact information available.'), findsOneWidget);
+      expect(find.text('İletişim bilgisi bulunmuyor.'), findsOneWidget);
       expect(find.byIcon(Icons.phone_outlined), findsNothing);
-      expect(find.text('ABOUT'), findsNothing); // bio yok → bölüm yok
+      expect(find.text('HAKKINDA'), findsNothing); // bio yok → bölüm yok
       expect(find.byIcon(Icons.star), findsNothing); // rating yok
     });
 
@@ -93,7 +93,7 @@ void main() {
       await pump(tester, full);
 
       expect(find.text('+1 212 555 0101'), findsOneWidget);
-      expect(find.text('ABOUT'), findsOneWidget);
+      expect(find.text('HAKKINDA'), findsOneWidget);
       expect(find.text('Experienced cardiologist.'), findsOneWidget);
       expect(find.byIcon(Icons.star), findsOneWidget);
     });
