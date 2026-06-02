@@ -6,9 +6,9 @@ import 'package:medifinder_case_study/features/providers/domain/entities/provide
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_type.dart';
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_providers.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_bloc.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_event.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_state.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list/provider_list_bloc.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list/provider_list_event.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list/provider_list_state.dart';
 import 'package:mocktail/mocktail.dart';
 
 class _MockGetProviders extends Mock implements GetProviders {}

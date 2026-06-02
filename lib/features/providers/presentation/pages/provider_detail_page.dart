@@ -8,9 +8,9 @@ import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 import 'package:medifinder_case_study/core/widgets/error_view.dart';
 import 'package:medifinder_case_study/core/widgets/loading_view.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_bloc.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_event.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_state.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail/provider_detail_bloc.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail/provider_detail_event.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail/provider_detail_state.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/offline_banner.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/provider_type_x.dart';
 

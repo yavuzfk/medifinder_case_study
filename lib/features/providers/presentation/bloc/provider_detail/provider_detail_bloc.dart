@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medifinder_case_study/core/error/failure.dart';
 import 'package:medifinder_case_study/core/utils/result.dart';
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_provider_detail.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_event.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_state.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail/provider_detail_event.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail/provider_detail_state.dart';
 
 class ProviderDetailBloc
     extends Bloc<ProviderDetailEvent, ProviderDetailState> {

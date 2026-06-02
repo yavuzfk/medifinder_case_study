@@ -3,8 +3,8 @@ import 'package:medifinder_case_study/core/error/failure.dart';
 import 'package:medifinder_case_study/core/utils/result.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_providers.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_event.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_state.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list/provider_list_event.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list/provider_list_state.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 class ProviderListBloc extends Bloc<ProviderListEvent, ProviderListState> {
