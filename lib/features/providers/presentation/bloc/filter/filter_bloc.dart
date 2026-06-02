@@ -43,30 +43,30 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     FilterCountrySelected event,
     Emitter<FilterState> emit,
   ) {
-    final s = state;
-    if (s is! FilterReady) return;
-    emit(s.copyWith(country: event.country, city: null));
+    final state = this.state;
+    if (state is! FilterReady) return;
+    emit(state.copyWith(country: event.country, city: null));
   }
 
   void _onCitySelected(FilterCitySelected event, Emitter<FilterState> emit) {
-    final s = state;
-    if (s is! FilterReady) return;
-    emit(s.copyWith(city: event.city));
+    final state = this.state;
+    if (state is! FilterReady) return;
+    emit(state.copyWith(city: event.city));
   }
 
   void _onCategorySelected(
     FilterCategorySelected event,
     Emitter<FilterState> emit,
   ) {
-    final s = state;
-    if (s is! FilterReady) return;
-    emit(s.copyWith(category: event.category));
+    final state = this.state;
+    if (state is! FilterReady) return;
+    emit(state.copyWith(category: event.category));
   }
 
   void _onCleared(FilterCleared event, Emitter<FilterState> emit) {
-    final s = state;
-    if (s is! FilterReady) return;
-    emit(s.copyWith(country: null, city: null, category: null));
+    final state = this.state;
+    if (state is! FilterReady) return;
+    emit(state.copyWith(country: null, city: null, category: null));
   }
 
   String _messageFor(Failure failure) => switch (failure) {
