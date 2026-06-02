@@ -24,7 +24,6 @@ class ProviderListBloc extends Bloc<ProviderListEvent, ProviderListState> {
   final GetProviders _getProviders;
   ProviderFilter _filter = const ProviderFilter();
 
-  /// Filtre ekranını mevcut seçimlerle açabilmek için.
   ProviderFilter get currentFilter => _filter;
 
   Future<void> _onStarted(
@@ -52,7 +51,6 @@ class ProviderListBloc extends Bloc<ProviderListEvent, ProviderListState> {
     ProviderListFilterChanged event,
     Emitter<ProviderListState> emit,
   ) {
-    // Filtre ekranı tip/arama'ya dokunmaz; ikisini de koru.
     _filter = event.filter.copyWith(query: _filter.query, type: _filter.type);
     return _load(emit);
   }

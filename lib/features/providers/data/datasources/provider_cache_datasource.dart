@@ -3,13 +3,9 @@ import 'dart:convert';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:medifinder_case_study/features/providers/data/models/provider_model.dart';
 
-/// Sağlayıcı kataloğunu cihazda saklayan offline cache.
-/// Remote başarılı olduğunda tam katalog buraya yazılır; remote hata verince
-/// repository buradan okuyup client-side filtreler.
 abstract interface class ProviderCacheDataSource {
   Future<void> saveCatalog(List<ProviderModel> providers);
 
-  /// Cache yoksa veya çözümlenemezse boş liste döner (asla fırlatmaz).
   List<ProviderModel> readCatalog();
 }
 

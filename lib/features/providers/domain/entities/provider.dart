@@ -9,10 +9,9 @@ abstract class Provider with _$Provider {
     required String id,
     required String name,
     required ProviderType type,
-    required String category, // branş
+    required String category,
     required String country,
     required String city,
-    // Aşağıdakiler bilinçli nullable — eksik veri yönetimini test etmek için.
     double? rating,
     String? phone,
     String? email,

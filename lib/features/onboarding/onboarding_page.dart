@@ -3,7 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medifinder_case_study/core/di/injection.dart';
 import 'package:medifinder_case_study/core/router/app_routes.dart';
-import 'package:medifinder_case_study/core/theme/app_theme.dart';
+import 'package:medifinder_case_study/core/theme/app_colors.dart';
+import 'package:medifinder_case_study/core/theme/app_radii.dart';
+import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 import 'package:medifinder_case_study/features/onboarding/onboarding_store.dart';
 
 class _Slide {
@@ -41,6 +43,12 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   final _controller = PageController();
   int _index = 0;
+
+  static const _slidePadding = EdgeInsets.symmetric(horizontal: 32);
+  static const _illustrationHeight = 240.0;
+  static const _illustrationGap = 40.0;
+  static const _dotSize = 8.0;
+  static const _dotActiveWidth = 24.0;
 
   @override
   void dispose() {
@@ -88,19 +96,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 itemBuilder: (context, i) {
                   final s = _slides[i];
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    padding: _slidePadding,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(s.asset, height: 240),
-                        const SizedBox(height: 40),
+                        SvgPicture.asset(s.asset, height: _illustrationHeight),
+                        const SizedBox(height: _illustrationGap),
                         Text(
                           s.title,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.headlineSmall
                               ?.copyWith(fontWeight: FontWeight.w700),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.medium),
                         Text(
                           s.subtitle,
                           textAlign: TextAlign.center,
@@ -119,20 +127,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 _slides.length,
                 (i) => AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  height: 8,
-                  width: _index == i ? 24 : 8,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.extraSmall,
+                  ),
+                  height: _dotSize,
+                  width: _index == i ? _dotActiveWidth : _dotSize,
                   decoration: BoxDecoration(
                     color: _index == i
                         ? AppColors.primary
                         : AppColors.primary.withValues(alpha: 0.25),
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(AppRadii.dot),
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(AppSpacing.extraLarge),
               child: SizedBox(
                 width: double.infinity,
                 child: FilledButton(

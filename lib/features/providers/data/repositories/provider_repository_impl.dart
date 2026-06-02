@@ -21,7 +21,6 @@ class ProviderRepositoryImpl implements ProviderRepository {
   ) async {
     try {
       final models = await _remote.getProviders(filter);
-      // Filtresiz çağrı = tam katalog → offline için sakla.
       if (filter == const ProviderFilter()) {
         await _cache.saveCatalog(models);
       }
@@ -43,7 +42,6 @@ class ProviderRepositoryImpl implements ProviderRepository {
       final model = await _remote.getProviderById(id);
       return Success((value: model.toEntity(), fromCache: false));
     } on NotFoundException catch (e) {
-      // Gerçekten yok → cache'e düşme.
       return ResultFailure(Failure.notFound(message: e.message));
     } on Object catch (e) {
       final cached =

@@ -34,7 +34,6 @@ void main() {
   setUp(() async {
     await getIt.reset();
     await configureDependencies();
-    // Hive'a dokunmadan: onboarding'i atla + bellekte cache enjekte et.
     getIt
       ..unregister<OnboardingStore>()
       ..registerSingleton<OnboardingStore>(_StubOnboardingStore())
@@ -44,19 +43,15 @@ void main() {
 
   tearDown(getIt.reset);
 
-  // Skeletonizer soyut bir sınıf (constructor somut alt tip döndürür),
-  // bu yüzden byType yerine predicate ile eşleştiriyoruz.
   final skeleton = find.byWidgetPredicate((w) => w is Skeletonizer);
 
   testWidgets('list screen shows skeleton, then provider cards', (tester) async {
     await tester.pumpWidget(const MediFinderApp());
 
-    // İlk frame: header başlığı + iskelet loading (mock 700ms gecikme).
     await tester.pump();
     expect(find.text('Sağlık hizmeti bul'), findsOneWidget);
     expect(skeleton, findsOneWidget);
 
-    // Mock latency sonrası loaded → iskelet kalkar, gerçek kartlar gelir.
     await tester.pump(const Duration(milliseconds: 800));
     expect(skeleton, findsNothing);
     expect(find.byType(ProviderCard), findsWidgets);

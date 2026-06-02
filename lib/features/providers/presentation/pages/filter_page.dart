@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medifinder_case_study/core/di/injection.dart';
+import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 import 'package:medifinder_case_study/core/widgets/error_view.dart';
 import 'package:medifinder_case_study/core/widgets/loading_view.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
@@ -79,7 +80,7 @@ class _FilterForm extends StatelessWidget {
       children: [
         Expanded(
           child: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.large),
             children: [
               _Dropdown(
                 label: 'Ülke',
@@ -88,17 +89,16 @@ class _FilterForm extends StatelessWidget {
                 items: state.options.countries,
                 onChanged: (v) => bloc.add(FilterEvent.countrySelected(v)),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.large),
               _Dropdown(
                 label: 'Şehir',
                 value: state.city,
                 allLabel: 'Tüm şehirler',
                 items: cities,
-                // Cascading: ülke seçilmeden şehir pasif.
                 enabled: state.country != null,
                 onChanged: (v) => bloc.add(FilterEvent.citySelected(v)),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.large),
               _Dropdown(
                 label: 'Branş',
                 value: state.category,
@@ -111,7 +111,7 @@ class _FilterForm extends StatelessWidget {
         ),
         SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.large),
             child: SizedBox(
               width: double.infinity,
               child: FilledButton(

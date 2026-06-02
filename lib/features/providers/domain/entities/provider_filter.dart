@@ -3,7 +3,6 @@ import 'package:medifinder_case_study/features/providers/domain/entities/provide
 
 part 'provider_filter.freezed.dart';
 
-/// Arama sorgusu + aktif filtreler tek state'te yaşar ve birlikte uygulanır.
 @freezed
 abstract class ProviderFilter with _$ProviderFilter {
   const factory ProviderFilter({

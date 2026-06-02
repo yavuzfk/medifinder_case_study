@@ -25,7 +25,6 @@ void main() {
 
   tearDown(getIt.reset);
 
-  // OnboardingPage context.go ile listeye gider → minimal yerel router.
   Widget harness() {
     final router = GoRouter(
       initialLocation: '/onboarding',
