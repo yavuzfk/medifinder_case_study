@@ -1,13 +1,25 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:medifinder_case_study/core/di/injection.dart';
+import 'package:medifinder_case_study/features/onboarding/onboarding_store.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/provider_card.dart';
 import 'package:medifinder_case_study/main.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+class _StubOnboardingStore implements OnboardingStore {
+  @override
+  bool get isOnboarded => true;
+  @override
+  Future<void> complete() async {}
+}
 
 void main() {
   setUp(() async {
     await getIt.reset();
     await configureDependencies();
+    // Onboarding'i Hive'sız atla: redirect doğrudan listeye düşsün.
+    getIt
+      ..unregister<OnboardingStore>()
+      ..registerSingleton<OnboardingStore>(_StubOnboardingStore());
   });
 
   tearDown(getIt.reset);

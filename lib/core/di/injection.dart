@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+import 'package:medifinder_case_study/features/onboarding/onboarding_store.dart';
 import 'package:medifinder_case_study/features/providers/providers_di.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -10,5 +12,8 @@ Future<void> configureDependencies() async {
 }
 
 void _registerCore() {
-  // Ortak bağımlılıklar (ör. Hive box'ları, router) burada kaydedilebilir.
+  // Lazy: kayıt anında Hive'a dokunmaz; ilk erişimde 'app' box'ından okur.
+  getIt.registerLazySingleton<OnboardingStore>(
+    () => HiveOnboardingStore(Hive.box<dynamic>('app')),
+  );
 }

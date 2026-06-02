@@ -7,6 +7,7 @@ import 'package:medifinder_case_study/core/theme/app_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  await Hive.openBox<dynamic>('app');
   await configureDependencies();
   runApp(const MediFinderApp());
 }
