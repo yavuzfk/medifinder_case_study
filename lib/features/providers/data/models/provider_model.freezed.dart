@@ -15,8 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProviderModel {
 
- String get id; String get name; String get type;// JSON'da string; entity'de enum'a map'lenir
- String get category; String get country; String get city; double? get rating; String? get phone; String? get email; String? get website; String? get bio; String? get imageUrl;
+ String get id; String get name; String get type; String get category; String get country; String get city; double? get rating; String? get phone; String? get email; String? get website; String? get bio; String? get imageUrl;
 /// Create a copy of ProviderModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -227,7 +226,6 @@ class _ProviderModel extends ProviderModel {
 @override final  String id;
 @override final  String name;
 @override final  String type;
-// JSON'da string; entity'de enum'a map'lenir
 @override final  String category;
 @override final  String country;
 @override final  String city;

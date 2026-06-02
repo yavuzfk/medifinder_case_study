@@ -14,9 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Provider {
 
- String get id; String get name; ProviderType get type; String get category;// branş
- String get country; String get city;// Aşağıdakiler bilinçli nullable — eksik veri yönetimini test etmek için.
- double? get rating; String? get phone; String? get email; String? get website; String? get bio; String? get imageUrl;
+ String get id; String get name; ProviderType get type; String get category; String get country; String get city; double? get rating; String? get phone; String? get email; String? get website; String? get bio; String? get imageUrl;
 /// Create a copy of Provider
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -226,10 +224,8 @@ class _Provider implements Provider {
 @override final  String name;
 @override final  ProviderType type;
 @override final  String category;
-// branş
 @override final  String country;
 @override final  String city;
-// Aşağıdakiler bilinçli nullable — eksik veri yönetimini test etmek için.
 @override final  double? rating;
 @override final  String? phone;
 @override final  String? email;
