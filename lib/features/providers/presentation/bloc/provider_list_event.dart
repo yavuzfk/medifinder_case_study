@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
+import 'package:medifinder_case_study/features/providers/domain/entities/provider_type.dart';
 
 part 'provider_list_event.freezed.dart';
 
@@ -8,6 +9,8 @@ sealed class ProviderListEvent with _$ProviderListEvent {
   const factory ProviderListEvent.started() = ProviderListStarted;
   const factory ProviderListEvent.searchChanged(String query) =
       ProviderListSearchChanged;
+  const factory ProviderListEvent.typeSelected(ProviderType? type) =
+      ProviderListTypeSelected;
   const factory ProviderListEvent.filterChanged(ProviderFilter filter) =
       ProviderListFilterChanged;
   const factory ProviderListEvent.refreshed() = ProviderListRefreshed;

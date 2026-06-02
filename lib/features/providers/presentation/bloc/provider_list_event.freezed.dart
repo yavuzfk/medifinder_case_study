@@ -55,12 +55,13 @@ extension ProviderListEventPatterns on ProviderListEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ProviderListStarted value)?  started,TResult Function( ProviderListSearchChanged value)?  searchChanged,TResult Function( ProviderListFilterChanged value)?  filterChanged,TResult Function( ProviderListRefreshed value)?  refreshed,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ProviderListStarted value)?  started,TResult Function( ProviderListSearchChanged value)?  searchChanged,TResult Function( ProviderListTypeSelected value)?  typeSelected,TResult Function( ProviderListFilterChanged value)?  filterChanged,TResult Function( ProviderListRefreshed value)?  refreshed,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case ProviderListStarted() when started != null:
 return started(_that);case ProviderListSearchChanged() when searchChanged != null:
-return searchChanged(_that);case ProviderListFilterChanged() when filterChanged != null:
+return searchChanged(_that);case ProviderListTypeSelected() when typeSelected != null:
+return typeSelected(_that);case ProviderListFilterChanged() when filterChanged != null:
 return filterChanged(_that);case ProviderListRefreshed() when refreshed != null:
 return refreshed(_that);case _:
   return orElse();
@@ -80,12 +81,13 @@ return refreshed(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ProviderListStarted value)  started,required TResult Function( ProviderListSearchChanged value)  searchChanged,required TResult Function( ProviderListFilterChanged value)  filterChanged,required TResult Function( ProviderListRefreshed value)  refreshed,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ProviderListStarted value)  started,required TResult Function( ProviderListSearchChanged value)  searchChanged,required TResult Function( ProviderListTypeSelected value)  typeSelected,required TResult Function( ProviderListFilterChanged value)  filterChanged,required TResult Function( ProviderListRefreshed value)  refreshed,}){
 final _that = this;
 switch (_that) {
 case ProviderListStarted():
 return started(_that);case ProviderListSearchChanged():
-return searchChanged(_that);case ProviderListFilterChanged():
+return searchChanged(_that);case ProviderListTypeSelected():
+return typeSelected(_that);case ProviderListFilterChanged():
 return filterChanged(_that);case ProviderListRefreshed():
 return refreshed(_that);}
 }
@@ -101,12 +103,13 @@ return refreshed(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ProviderListStarted value)?  started,TResult? Function( ProviderListSearchChanged value)?  searchChanged,TResult? Function( ProviderListFilterChanged value)?  filterChanged,TResult? Function( ProviderListRefreshed value)?  refreshed,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ProviderListStarted value)?  started,TResult? Function( ProviderListSearchChanged value)?  searchChanged,TResult? Function( ProviderListTypeSelected value)?  typeSelected,TResult? Function( ProviderListFilterChanged value)?  filterChanged,TResult? Function( ProviderListRefreshed value)?  refreshed,}){
 final _that = this;
 switch (_that) {
 case ProviderListStarted() when started != null:
 return started(_that);case ProviderListSearchChanged() when searchChanged != null:
-return searchChanged(_that);case ProviderListFilterChanged() when filterChanged != null:
+return searchChanged(_that);case ProviderListTypeSelected() when typeSelected != null:
+return typeSelected(_that);case ProviderListFilterChanged() when filterChanged != null:
 return filterChanged(_that);case ProviderListRefreshed() when refreshed != null:
 return refreshed(_that);case _:
   return null;
@@ -125,11 +128,12 @@ return refreshed(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String query)?  searchChanged,TResult Function( ProviderFilter filter)?  filterChanged,TResult Function()?  refreshed,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String query)?  searchChanged,TResult Function( ProviderType? type)?  typeSelected,TResult Function( ProviderFilter filter)?  filterChanged,TResult Function()?  refreshed,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case ProviderListStarted() when started != null:
 return started();case ProviderListSearchChanged() when searchChanged != null:
-return searchChanged(_that.query);case ProviderListFilterChanged() when filterChanged != null:
+return searchChanged(_that.query);case ProviderListTypeSelected() when typeSelected != null:
+return typeSelected(_that.type);case ProviderListFilterChanged() when filterChanged != null:
 return filterChanged(_that.filter);case ProviderListRefreshed() when refreshed != null:
 return refreshed();case _:
   return orElse();
@@ -149,11 +153,12 @@ return refreshed();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String query)  searchChanged,required TResult Function( ProviderFilter filter)  filterChanged,required TResult Function()  refreshed,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String query)  searchChanged,required TResult Function( ProviderType? type)  typeSelected,required TResult Function( ProviderFilter filter)  filterChanged,required TResult Function()  refreshed,}) {final _that = this;
 switch (_that) {
 case ProviderListStarted():
 return started();case ProviderListSearchChanged():
-return searchChanged(_that.query);case ProviderListFilterChanged():
+return searchChanged(_that.query);case ProviderListTypeSelected():
+return typeSelected(_that.type);case ProviderListFilterChanged():
 return filterChanged(_that.filter);case ProviderListRefreshed():
 return refreshed();}
 }
@@ -169,11 +174,12 @@ return refreshed();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String query)?  searchChanged,TResult? Function( ProviderFilter filter)?  filterChanged,TResult? Function()?  refreshed,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String query)?  searchChanged,TResult? Function( ProviderType? type)?  typeSelected,TResult? Function( ProviderFilter filter)?  filterChanged,TResult? Function()?  refreshed,}) {final _that = this;
 switch (_that) {
 case ProviderListStarted() when started != null:
 return started();case ProviderListSearchChanged() when searchChanged != null:
-return searchChanged(_that.query);case ProviderListFilterChanged() when filterChanged != null:
+return searchChanged(_that.query);case ProviderListTypeSelected() when typeSelected != null:
+return typeSelected(_that.type);case ProviderListFilterChanged() when filterChanged != null:
 return filterChanged(_that.filter);case ProviderListRefreshed() when refreshed != null:
 return refreshed();case _:
   return null;
@@ -275,6 +281,72 @@ class _$ProviderListSearchChangedCopyWithImpl<$Res>
   return _then(ProviderListSearchChanged(
 null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class ProviderListTypeSelected implements ProviderListEvent {
+  const ProviderListTypeSelected(this.type);
+  
+
+ final  ProviderType? type;
+
+/// Create a copy of ProviderListEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ProviderListTypeSelectedCopyWith<ProviderListTypeSelected> get copyWith => _$ProviderListTypeSelectedCopyWithImpl<ProviderListTypeSelected>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProviderListTypeSelected&&(identical(other.type, type) || other.type == type));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,type);
+
+@override
+String toString() {
+  return 'ProviderListEvent.typeSelected(type: $type)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ProviderListTypeSelectedCopyWith<$Res> implements $ProviderListEventCopyWith<$Res> {
+  factory $ProviderListTypeSelectedCopyWith(ProviderListTypeSelected value, $Res Function(ProviderListTypeSelected) _then) = _$ProviderListTypeSelectedCopyWithImpl;
+@useResult
+$Res call({
+ ProviderType? type
+});
+
+
+
+
+}
+/// @nodoc
+class _$ProviderListTypeSelectedCopyWithImpl<$Res>
+    implements $ProviderListTypeSelectedCopyWith<$Res> {
+  _$ProviderListTypeSelectedCopyWithImpl(this._self, this._then);
+
+  final ProviderListTypeSelected _self;
+  final $Res Function(ProviderListTypeSelected) _then;
+
+/// Create a copy of ProviderListEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? type = freezed,}) {
+  return _then(ProviderListTypeSelected(
+freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as ProviderType?,
   ));
 }
 
