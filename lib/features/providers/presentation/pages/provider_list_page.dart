@@ -7,8 +7,8 @@ import 'package:medifinder_case_study/core/router/app_routes.dart';
 import 'package:medifinder_case_study/core/theme/app_theme.dart';
 import 'package:medifinder_case_study/core/widgets/empty_view.dart';
 import 'package:medifinder_case_study/core/widgets/error_view.dart';
-import 'package:medifinder_case_study/core/widgets/loading_view.dart';
 import 'package:medifinder_case_study/features/providers/data/debug/mock_failure_toggle.dart';
+import 'package:medifinder_case_study/features/providers/domain/entities/provider.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_type.dart';
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_bloc.dart';
@@ -16,6 +16,7 @@ import 'package:medifinder_case_study/features/providers/presentation/bloc/provi
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_state.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/provider_card.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/type_chip.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ProviderListPage extends StatelessWidget {
   const ProviderListPage({super.key});
@@ -133,24 +134,35 @@ class _Header extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [AppColors.headerStart, AppColors.headerEnd],
         ),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(28)),
       ),
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+          padding: const EdgeInsets.fromLTRB(20, 8, 12, 22),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   const Expanded(
-                    child: Text(
-                      'Find a provider',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Find a provider',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(height: 2),
+                        Text(
+                          'Trusted doctors, clinics & hospitals',
+                          style: TextStyle(color: Colors.white70, fontSize: 13),
+                        ),
+                      ],
                     ),
                   ),
                   if (onDebugToggle != null)
@@ -169,13 +181,25 @@ class _Header extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
-              TextField(
-                controller: controller,
-                onChanged: onSearch,
-                decoration: const InputDecoration(
-                  hintText: 'Search by name or specialty',
-                  prefixIcon: Icon(Icons.search),
+              const SizedBox(height: 14),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.10),
+                      blurRadius: 16,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  controller: controller,
+                  onChanged: onSearch,
+                  decoration: const InputDecoration(
+                    hintText: 'Search by name or specialty',
+                    prefixIcon: Icon(Icons.search),
+                  ),
                 ),
               ),
             ],
@@ -194,7 +218,9 @@ class _ProviderListBody extends StatelessWidget {
     return BlocBuilder<ProviderListBloc, ProviderListState>(
       builder: (context, state) {
         return switch (state) {
-          ProviderListInitial() || ProviderListLoading() => const LoadingView(),
+          ProviderListInitial() ||
+          ProviderListLoading() =>
+            const _ProviderListSkeleton(),
           ProviderListEmpty() => const EmptyView(
               message:
                   'No providers found.\nTry adjusting your search or filters.',
@@ -226,6 +252,31 @@ class _ProviderListBody extends StatelessWidget {
             ),
         };
       },
+    );
+  }
+}
+
+/// Loading state'inde gerçek kart düzenini taklit eden iskelet liste.
+class _ProviderListSkeleton extends StatelessWidget {
+  const _ProviderListSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    final fake = Provider(
+      id: '',
+      name: BoneMock.name,
+      type: ProviderType.doctor,
+      category: BoneMock.words(2),
+      country: BoneMock.name,
+      city: BoneMock.name,
+      rating: 4.8,
+    );
+    return Skeletonizer(
+      child: ListView.builder(
+        padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
+        itemCount: 6,
+        itemBuilder: (_, _) => ProviderCard(provider: fake, onTap: () {}),
+      ),
     );
   }
 }

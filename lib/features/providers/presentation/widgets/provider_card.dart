@@ -38,12 +38,23 @@ class ProviderCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        p.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w700),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              p.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: theme.textTheme.titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                          if (p.rating != null) ...[
+                            const SizedBox(width: 8),
+                            _Rating(value: p.rating!),
+                          ],
+                        ],
                       ),
                       const SizedBox(height: 8),
                       _Tag(text: p.category),
@@ -70,25 +81,31 @@ class ProviderCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (p.rating != null) ...[
-                  const SizedBox(width: 8),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.star, size: 16, color: AppColors.star),
-                      const SizedBox(width: 2),
-                      Text(
-                        p.rating!.toStringAsFixed(1),
-                        style: theme.textTheme.labelLarge,
-                      ),
-                    ],
-                  ),
-                ],
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Rating extends StatelessWidget {
+  const _Rating({required this.value});
+  final double value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(Icons.star, size: 16, color: AppColors.star),
+        const SizedBox(width: 2),
+        Text(
+          value.toStringAsFixed(1),
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+      ],
     );
   }
 }
