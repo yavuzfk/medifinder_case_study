@@ -6,9 +6,9 @@ import 'package:medifinder_case_study/core/utils/result.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_type.dart';
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_provider_detail.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_bloc.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_event.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_state.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail/provider_detail_bloc.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail/provider_detail_event.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail/provider_detail_state.dart';
 import 'package:medifinder_case_study/features/providers/presentation/pages/provider_detail_page.dart';
 import 'package:mocktail/mocktail.dart';
 

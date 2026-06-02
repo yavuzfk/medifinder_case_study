@@ -7,9 +7,9 @@ import 'package:medifinder_case_study/features/providers/domain/repositories/pro
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_filter_options.dart';
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_provider_detail.dart';
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_providers.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/filter_bloc.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_bloc.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_bloc.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/filter/filter_bloc.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail/provider_detail_bloc.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list/provider_list_bloc.dart';
 
 void registerProvidersFeature(GetIt gh) {
   gh

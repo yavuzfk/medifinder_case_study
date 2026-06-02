@@ -6,9 +6,9 @@ import 'package:medifinder_case_study/core/theme/app_spacing.dart';
 import 'package:medifinder_case_study/core/widgets/error_view.dart';
 import 'package:medifinder_case_study/core/widgets/loading_view.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/filter_bloc.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/filter_event.dart';
-import 'package:medifinder_case_study/features/providers/presentation/bloc/filter_state.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/filter/filter_bloc.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/filter/filter_event.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/filter/filter_state.dart';
 
 class FilterPage extends StatelessWidget {
   const FilterPage({this.initialFilter, super.key});
