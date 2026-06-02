@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medifinder_case_study/core/router/app_routes.dart';
+import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
+import 'package:medifinder_case_study/features/providers/presentation/pages/filter_page.dart';
 import 'package:medifinder_case_study/features/providers/presentation/pages/provider_list_page.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -14,8 +16,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.filter,
       name: AppRoutes.filterName,
-      // TODO(yavuzfk): replace with const FilterPage() in feat/filter
-      builder: (context, state) => const _PlaceholderPage(title: 'Filter'),
+      builder: (context, state) {
+        final initial = state.extra as ProviderFilter?;
+        return FilterPage(initialFilter: initial);
+      },
     ),
     GoRoute(
       path: AppRoutes.providerDetail,
