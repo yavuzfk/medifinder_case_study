@@ -8,9 +8,8 @@ servisi taklit eden mock veri kaynağından gelir.
 
 ## Demo
 
-<video src="https://github.com/yavuzfk/medifinder_case_study/raw/main/docs/demo.mp4" controls width="320"></video>
-
-> Oynatıcı görünmüyorsa: [docs/demo.mp4](docs/demo.mp4)
+▶️ **[Uygulama tanıtımı — ekran kaydı](docs/demo.mp4)** — bağlantı GitHub'ın
+oynatıcısında açılır.
 
 ---
 
