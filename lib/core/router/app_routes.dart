@@ -1,6 +1,9 @@
 abstract final class AppRoutes {
   const AppRoutes._();
 
+  static const onboarding = '/onboarding';
+  static const onboardingName = 'onboarding';
+
   static const providerList = '/';
   static const providerListName = 'provider-list';
 
