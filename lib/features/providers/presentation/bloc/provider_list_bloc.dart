@@ -23,6 +23,9 @@ class ProviderListBloc extends Bloc<ProviderListEvent, ProviderListState> {
   final GetProviders _getProviders;
   ProviderFilter _filter = const ProviderFilter();
 
+  /// Filtre ekranını mevcut seçimlerle açabilmek için.
+  ProviderFilter get currentFilter => _filter;
+
   Future<void> _onStarted(
     ProviderListStarted event,
     Emitter<ProviderListState> emit,

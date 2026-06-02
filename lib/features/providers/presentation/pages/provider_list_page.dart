@@ -46,8 +46,10 @@ class _ProviderListViewState extends State<_ProviderListView> {
   ProviderListBloc get _bloc => context.read<ProviderListBloc>();
 
   Future<void> _openFilter() async {
-    final filter =
-        await context.pushNamed<ProviderFilter>(AppRoutes.filterName);
+    final filter = await context.pushNamed<ProviderFilter>(
+      AppRoutes.filterName,
+      extra: _bloc.currentFilter,
+    );
     if (filter != null && mounted) {
       _bloc.add(ProviderListEvent.filterChanged(filter));
     }

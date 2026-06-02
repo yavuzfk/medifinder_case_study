@@ -5,6 +5,7 @@ import 'package:medifinder_case_study/features/providers/domain/repositories/pro
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_filter_options.dart';
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_provider_detail.dart';
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_providers.dart';
+import 'package:medifinder_case_study/features/providers/presentation/bloc/filter_bloc.dart';
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_bloc.dart';
 
 void registerProvidersFeature(GetIt gh) {
@@ -18,5 +19,6 @@ void registerProvidersFeature(GetIt gh) {
     ..registerFactory(() => GetProviders(gh()))
     ..registerFactory(() => GetProviderDetail(gh()))
     ..registerFactory(() => GetFilterOptions(gh()))
-    ..registerFactory(() => ProviderListBloc(getProviders: gh()));
+    ..registerFactory(() => ProviderListBloc(getProviders: gh()))
+    ..registerFactory(() => FilterBloc(getFilterOptions: gh()));
 }
