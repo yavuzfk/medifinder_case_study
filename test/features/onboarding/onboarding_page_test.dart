@@ -2,25 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medifinder_case_study/core/di/injection.dart';
-import 'package:medifinder_case_study/features/onboarding/onboarding_page.dart';
-import 'package:medifinder_case_study/features/onboarding/onboarding_store.dart';
+import 'package:medifinder_case_study/features/onboarding/domain/entities/onboarding_slide.dart';
+import 'package:medifinder_case_study/features/onboarding/domain/repositories/onboarding_repository.dart';
+import 'package:medifinder_case_study/features/onboarding/domain/usecases/complete_onboarding.dart';
+import 'package:medifinder_case_study/features/onboarding/domain/usecases/get_onboarding_slides.dart';
+import 'package:medifinder_case_study/features/onboarding/presentation/bloc/onboarding_bloc.dart';
+import 'package:medifinder_case_study/features/onboarding/presentation/pages/onboarding_page.dart';
 
-class _StubOnboardingStore implements OnboardingStore {
-  _StubOnboardingStore({required this.isOnboarded});
+class _FakeOnboardingRepository implements OnboardingRepository {
+  bool completed = false;
 
   @override
-  bool isOnboarded;
+  bool get isCompleted => completed;
 
   @override
-  Future<void> complete() async => isOnboarded = true;
+  Future<void> complete() async => completed = true;
+
+  @override
+  List<OnboardingSlide> getSlides() => const [
+        OnboardingSlide(asset: 'a.svg', title: 'Doğru bakımı bulun', subtitle: ''),
+        OnboardingSlide(asset: 'b.svg', title: 'Güvenle filtreleyin', subtitle: ''),
+        OnboardingSlide(asset: 'c.svg', title: 'Net karar verin', subtitle: ''),
+      ];
 }
 
 void main() {
-  late _StubOnboardingStore store;
+  late _FakeOnboardingRepository repository;
 
   setUp(() {
-    store = _StubOnboardingStore(isOnboarded: false);
-    getIt.registerSingleton<OnboardingStore>(store);
+    repository = _FakeOnboardingRepository();
+    getIt.registerFactory(
+      () => OnboardingBloc(
+        getSlides: GetOnboardingSlides(repository),
+        completeOnboarding: CompleteOnboarding(repository),
+      ),
+    );
   });
 
   tearDown(getIt.reset);
@@ -62,7 +78,7 @@ void main() {
     await tester.tap(find.text('Başla'));
     await tester.pumpAndSettle();
 
-    expect(store.isOnboarded, isTrue);
+    expect(repository.completed, isTrue);
     expect(find.text('LIST'), findsOneWidget);
   });
 
@@ -75,7 +91,7 @@ void main() {
     await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
 
-    expect(store.isOnboarded, isTrue);
+    expect(repository.completed, isTrue);
     expect(find.text('LIST'), findsOneWidget);
   });
 }

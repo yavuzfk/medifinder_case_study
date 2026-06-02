@@ -1,8 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:medifinder_case_study/core/di/injection.dart';
 import 'package:medifinder_case_study/core/router/app_routes.dart';
-import 'package:medifinder_case_study/features/onboarding/onboarding_page.dart';
-import 'package:medifinder_case_study/features/onboarding/onboarding_store.dart';
+import 'package:medifinder_case_study/features/onboarding/domain/usecases/is_onboarding_completed.dart';
+import 'package:medifinder_case_study/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
 import 'package:medifinder_case_study/features/providers/presentation/pages/filter_page.dart';
 import 'package:medifinder_case_study/features/providers/presentation/pages/provider_detail_page.dart';
@@ -11,7 +11,7 @@ import 'package:medifinder_case_study/features/providers/presentation/pages/prov
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.providerList,
   redirect: (context, state) {
-    final onboarded = getIt<OnboardingStore>().isOnboarded;
+    final onboarded = getIt<IsOnboardingCompleted>()();
     final atOnboarding = state.matchedLocation == AppRoutes.onboarding;
     if (!onboarded && !atOnboarding) return AppRoutes.onboarding;
     if (onboarded && atOnboarding) return AppRoutes.providerList;
