@@ -42,9 +42,9 @@ class ProviderDetailBloc
   }
 
   String _messageFor(Failure failure) => switch (failure) {
-        NotFoundFailure() => 'Provider not found.',
-        NetworkFailure() => 'No internet connection. Please try again.',
-        ServerFailure() => 'Could not load provider. Please try again.',
-        _ => 'Unexpected error. Please try again.',
+        NotFoundFailure() => 'Kayıt bulunamadı.',
+        NetworkFailure() => 'İnternet bağlantısı yok. Lütfen tekrar deneyin.',
+        ServerFailure() => 'Bilgiler yüklenemedi. Lütfen tekrar deneyin.',
+        _ => 'Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.',
       };
 }

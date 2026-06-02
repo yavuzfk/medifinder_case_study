@@ -31,7 +31,7 @@ class _FilterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Filter'),
+        title: const Text('Filtrele'),
         actions: [
           BlocBuilder<FilterBloc, FilterState>(
             builder: (context, state) {
@@ -39,7 +39,7 @@ class _FilterView extends StatelessWidget {
               return TextButton(
                 onPressed: () =>
                     context.read<FilterBloc>().add(const FilterEvent.cleared()),
-                child: const Text('Reset'),
+                child: const Text('Sıfırla'),
               );
             },
           ),
@@ -82,17 +82,17 @@ class _FilterForm extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             children: [
               _Dropdown(
-                label: 'Country',
+                label: 'Ülke',
                 value: state.country,
-                allLabel: 'All countries',
+                allLabel: 'Tüm ülkeler',
                 items: state.options.countries,
                 onChanged: (v) => bloc.add(FilterEvent.countrySelected(v)),
               ),
               const SizedBox(height: 16),
               _Dropdown(
-                label: 'City',
+                label: 'Şehir',
                 value: state.city,
-                allLabel: 'All cities',
+                allLabel: 'Tüm şehirler',
                 items: cities,
                 // Cascading: ülke seçilmeden şehir pasif.
                 enabled: state.country != null,
@@ -100,9 +100,9 @@ class _FilterForm extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               _Dropdown(
-                label: 'Category',
+                label: 'Branş',
                 value: state.category,
-                allLabel: 'All categories',
+                allLabel: 'Tüm branşlar',
                 items: state.options.categories,
                 onChanged: (v) => bloc.add(FilterEvent.categorySelected(v)),
               ),
@@ -122,7 +122,7 @@ class _FilterForm extends StatelessWidget {
                     category: state.category,
                   ),
                 ),
-                child: const Text('Apply'),
+                child: const Text('Uygula'),
               ),
             ),
           ),

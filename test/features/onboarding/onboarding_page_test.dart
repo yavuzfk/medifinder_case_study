@@ -49,18 +49,18 @@ void main() {
     await tester.pumpWidget(harness());
     await tester.pumpAndSettle();
 
-    expect(find.text('Find the right care'), findsOneWidget);
+    expect(find.text('Doğru bakımı bulun'), findsOneWidget);
 
-    await tester.tap(find.text('Next'));
+    await tester.tap(find.text('İleri'));
     await tester.pumpAndSettle();
-    expect(find.text('Filter with confidence'), findsOneWidget);
+    expect(find.text('Güvenle filtreleyin'), findsOneWidget);
 
-    await tester.tap(find.text('Next'));
+    await tester.tap(find.text('İleri'));
     await tester.pumpAndSettle();
-    expect(find.text('Decide with clarity'), findsOneWidget);
-    expect(find.text('Get Started'), findsOneWidget);
+    expect(find.text('Net karar verin'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
 
-    await tester.tap(find.text('Get Started'));
+    await tester.tap(find.text('Başla'));
     await tester.pumpAndSettle();
 
     expect(store.isOnboarded, isTrue);
@@ -73,7 +73,7 @@ void main() {
     await tester.pumpWidget(harness());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Skip'));
+    await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
 
     expect(store.isOnboarded, isTrue);

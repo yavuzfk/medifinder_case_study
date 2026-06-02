@@ -5,8 +5,8 @@ enum ProviderType {
   hospital;
 
   String get label => switch (this) {
-        ProviderType.doctor => 'Doctor',
-        ProviderType.clinic => 'Clinic',
-        ProviderType.hospital => 'Hospital',
+        ProviderType.doctor => 'Doktor',
+        ProviderType.clinic => 'Klinik',
+        ProviderType.hospital => 'Hastane',
       };
 }

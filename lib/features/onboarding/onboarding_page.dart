@@ -16,18 +16,18 @@ class _Slide {
 const _slides = <_Slide>[
   _Slide(
     'assets/illustrations/discover.svg',
-    'Find the right care',
-    'Search trusted doctors, clinics and hospitals across the globe.',
+    'Doğru bakımı bulun',
+    'Dünya genelinde güvenilir doktorları, klinikleri ve hastaneleri arayın.',
   ),
   _Slide(
     'assets/illustrations/filter.svg',
-    'Filter with confidence',
-    'Narrow by country, city and specialty to reach the right specialist fast.',
+    'Güvenle filtreleyin',
+    'Doğru uzmana hızla ulaşmak için ülke, şehir ve branşa göre daraltın.',
   ),
   _Slide(
     'assets/illustrations/decide.svg',
-    'Decide with clarity',
-    'See specialties, ratings and contact details at a glance.',
+    'Net karar verin',
+    'Branşları, puanları ve iletişim bilgilerini tek bakışta görün.',
   ),
 ];
 
@@ -77,7 +77,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: _finish,
-                child: const Text('Skip'),
+                child: const Text('Atla'),
               ),
             ),
             Expanded(
@@ -137,7 +137,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: _next,
-                  child: Text(_isLast ? 'Get Started' : 'Next'),
+                  child: Text(_isLast ? 'Başla' : 'İleri'),
                 ),
               ),
             ),

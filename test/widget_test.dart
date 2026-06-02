@@ -33,7 +33,7 @@ void main() {
 
     // İlk frame: header başlığı + iskelet loading (mock 700ms gecikme).
     await tester.pump();
-    expect(find.text('Find a provider'), findsOneWidget);
+    expect(find.text('Sağlık hizmeti bul'), findsOneWidget);
     expect(skeleton, findsOneWidget);
 
     // Mock latency sonrası loaded → iskelet kalkar, gerçek kartlar gelir.
