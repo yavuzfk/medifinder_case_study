@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Provider> providers)?  loaded,TResult Function()?  empty,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Provider> providers,  bool fromCache)?  loaded,TResult Function()?  empty,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case ProviderListInitial() when initial != null:
 return initial();case ProviderListLoading() when loading != null:
 return loading();case ProviderListLoaded() when loaded != null:
-return loaded(_that.providers);case ProviderListEmpty() when empty != null:
+return loaded(_that.providers,_that.fromCache);case ProviderListEmpty() when empty != null:
 return empty();case ProviderListError() when error != null:
 return error(_that.message);case _:
   return orElse();
@@ -153,12 +153,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Provider> providers)  loaded,required TResult Function()  empty,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Provider> providers,  bool fromCache)  loaded,required TResult Function()  empty,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case ProviderListInitial():
 return initial();case ProviderListLoading():
 return loading();case ProviderListLoaded():
-return loaded(_that.providers);case ProviderListEmpty():
+return loaded(_that.providers,_that.fromCache);case ProviderListEmpty():
 return empty();case ProviderListError():
 return error(_that.message);}
 }
@@ -174,12 +174,12 @@ return error(_that.message);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Provider> providers)?  loaded,TResult? Function()?  empty,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Provider> providers,  bool fromCache)?  loaded,TResult? Function()?  empty,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case ProviderListInitial() when initial != null:
 return initial();case ProviderListLoading() when loading != null:
 return loading();case ProviderListLoaded() when loaded != null:
-return loaded(_that.providers);case ProviderListEmpty() when empty != null:
+return loaded(_that.providers,_that.fromCache);case ProviderListEmpty() when empty != null:
 return empty();case ProviderListError() when error != null:
 return error(_that.message);case _:
   return null;
@@ -257,7 +257,7 @@ String toString() {
 
 
 class ProviderListLoaded implements ProviderListState {
-  const ProviderListLoaded(final  List<Provider> providers): _providers = providers;
+  const ProviderListLoaded(final  List<Provider> providers, {this.fromCache = false}): _providers = providers;
   
 
  final  List<Provider> _providers;
@@ -267,6 +267,7 @@ class ProviderListLoaded implements ProviderListState {
   return EqualUnmodifiableListView(_providers);
 }
 
+@JsonKey() final  bool fromCache;
 
 /// Create a copy of ProviderListState
 /// with the given fields replaced by the non-null parameter values.
@@ -278,16 +279,16 @@ $ProviderListLoadedCopyWith<ProviderListLoaded> get copyWith => _$ProviderListLo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProviderListLoaded&&const DeepCollectionEquality().equals(other._providers, _providers));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProviderListLoaded&&const DeepCollectionEquality().equals(other._providers, _providers)&&(identical(other.fromCache, fromCache) || other.fromCache == fromCache));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_providers));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_providers),fromCache);
 
 @override
 String toString() {
-  return 'ProviderListState.loaded(providers: $providers)';
+  return 'ProviderListState.loaded(providers: $providers, fromCache: $fromCache)';
 }
 
 
@@ -298,7 +299,7 @@ abstract mixin class $ProviderListLoadedCopyWith<$Res> implements $ProviderListS
   factory $ProviderListLoadedCopyWith(ProviderListLoaded value, $Res Function(ProviderListLoaded) _then) = _$ProviderListLoadedCopyWithImpl;
 @useResult
 $Res call({
- List<Provider> providers
+ List<Provider> providers, bool fromCache
 });
 
 
@@ -315,10 +316,11 @@ class _$ProviderListLoadedCopyWithImpl<$Res>
 
 /// Create a copy of ProviderListState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? providers = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? providers = null,Object? fromCache = null,}) {
   return _then(ProviderListLoaded(
 null == providers ? _self._providers : providers // ignore: cast_nullable_to_non_nullable
-as List<Provider>,
+as List<Provider>,fromCache: null == fromCache ? _self.fromCache : fromCache // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

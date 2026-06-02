@@ -7,6 +7,6 @@ class GetProviders {
   const GetProviders(this._repository);
   final ProviderRepository _repository;
 
-  Future<Result<List<Provider>>> call(ProviderFilter filter) =>
+  Future<Result<Cached<List<Provider>>>> call(ProviderFilter filter) =>
       _repository.getProviders(filter);
 }

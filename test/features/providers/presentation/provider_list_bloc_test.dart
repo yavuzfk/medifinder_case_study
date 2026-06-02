@@ -33,8 +33,9 @@ void main() {
 
   blocTest<ProviderListBloc, ProviderListState>(
     'emits [loading, loaded] when providers are returned',
-    setUp: () => when(() => getProviders(any()))
-        .thenAnswer((_) async => const Success([provider])),
+    setUp: () => when(() => getProviders(any())).thenAnswer(
+      (_) async => const Success((value: [provider], fromCache: false)),
+    ),
     build: build,
     act: (bloc) => bloc.add(const ProviderListEvent.started()),
     expect: () => [
@@ -45,8 +46,9 @@ void main() {
 
   blocTest<ProviderListBloc, ProviderListState>(
     'emits [loading, empty] when result is empty',
-    setUp: () => when(() => getProviders(any()))
-        .thenAnswer((_) async => const Success(<Provider>[])),
+    setUp: () => when(() => getProviders(any())).thenAnswer(
+      (_) async => const Success((value: <Provider>[], fromCache: false)),
+    ),
     build: build,
     act: (bloc) => bloc.add(const ProviderListEvent.started()),
     expect: () => [
@@ -70,8 +72,9 @@ void main() {
 
   blocTest<ProviderListBloc, ProviderListState>(
     'debounces search and queries with the typed value',
-    setUp: () => when(() => getProviders(any()))
-        .thenAnswer((_) async => const Success([provider])),
+    setUp: () => when(() => getProviders(any())).thenAnswer(
+      (_) async => const Success((value: [provider], fromCache: false)),
+    ),
     build: build,
     act: (bloc) => bloc.add(const ProviderListEvent.searchChanged('emily')),
     wait: const Duration(milliseconds: 350),

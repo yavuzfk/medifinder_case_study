@@ -118,7 +118,10 @@ Kapsam yüzdesi yerine **anlamlı testler** hedeflendi: asıl mantığın yaşad
 yerler (exception→Failure eşlemesi, bloc durum geçişleri, null yönetimi).
 
 - **Repository (mocktail):** datasource exception’larının doğru `Failure`’a
-  eşlendiğini doğrular.
+  eşlendiğini ve **offline fallback’i** (remote hata + dolu cache → `fromCache`
+  ile başarı) doğrular.
+- **Cache datasource:** katalogu JSON olarak yazıp okuduğunu, bozuk/boş veride
+  güvenle boş döndüğünü doğrular.
 - **Bloc (`bloc_test`):** liste loaded/empty/error + debounce’lu arama; filtre
   pre‑fill/error + cascading şehir sıfırlama; detay loaded/not‑found.
 - **Widget:** detay ekranının eksik alanları gizleyip dolu alanları gösterdiği;
@@ -157,12 +160,17 @@ test('maps ServerException to Failure.server', () async {
 - Her ekran hatada **kullanıcı dostu Türkçe bir mesaj** ve **Tekrar dene** butonu
   gösterir (`ErrorView(onRetry:)`); bloc, `refreshed`/`retried` event’iyle son
   isteği yineler.
-- Hata durumunu canlı demo edebilmek için liste başlığında **yalnızca debug’da
-  görünen** bir “sahte hata” düğmesi var (`kDebugMode`); açıldığında datasource
-  hata fırlatır → error/retry akışı tetiklenir.
-- **Offline cache** henüz uygulanmadı; doğal sonraki adım, repository’ye Hive
-  tabanlı bir “önce cache, sonra ağ” katmanı eklemek (model `toJson` ve `app`
-  kutusu hazır).
+- **Offline cache (Hive):** Remote başarılı olunca tam katalog `provider_cache`
+  kutusuna JSON olarak yazılır (write‑through). Remote hata verince repository
+  cache’ten okuyup **aynı `providerMatchesFilter`** ile client‑side filtreler;
+  böylece çevrimdışıyken arama/filtre/detay çalışmaya devam eder. Veri cache’ten
+  geldiğinde domain’den state’e taşınan bir `fromCache` bayrağıyla listenin ve
+  detayın üstünde **“Çevrimdışı — önbellekten gösteriliyor”** çubuğu görünür.
+- Gerçek bir backend olmadığından “çevrimdışı” = remote hatası. Liste başlığındaki
+  **yalnızca debug’da görünen** “Çevrimdışı simüle et” düğmesi (`kDebugMode`)
+  datasource’u hata fırlatır hâle getirir → cache fallback + banner canlı demo
+  edilebilir. (Gerçek ağ algılama — `connectivity_plus` — bilinçli olarak
+  eklenmedi; mock’ta gereksiz.)
 
 ---
 

@@ -47,8 +47,9 @@ void main() {
 
     blocTest<ProviderDetailBloc, ProviderDetailState>(
       'emits [loading, loaded] on success',
-      setUp: () => when(() => getProviderDetail(any()))
-          .thenAnswer((_) async => const Success(full)),
+      setUp: () => when(() => getProviderDetail(any())).thenAnswer(
+        (_) async => const Success((value: full, fromCache: false)),
+      ),
       build: build,
       act: (bloc) => bloc.add(const ProviderDetailEvent.started('1')),
       expect: () => [

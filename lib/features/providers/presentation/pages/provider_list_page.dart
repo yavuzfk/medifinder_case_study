@@ -14,6 +14,7 @@ import 'package:medifinder_case_study/features/providers/domain/entities/provide
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_bloc.dart';
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_event.dart';
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_list_state.dart';
+import 'package:medifinder_case_study/features/providers/presentation/widgets/offline_banner.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/provider_card.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/type_chip.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -167,7 +168,7 @@ class _Header extends StatelessWidget {
                   ),
                   if (onDebugToggle != null)
                     IconButton(
-                      tooltip: 'Sahte hatayı aç/kapat (debug)',
+                      tooltip: 'Çevrimdışı simüle et (debug)',
                       onPressed: onDebugToggle,
                       icon: const Icon(
                         Icons.bug_report_outlined,
@@ -231,24 +232,31 @@ class _ProviderListBody extends StatelessWidget {
                   .read<ProviderListBloc>()
                   .add(const ProviderListEvent.refreshed()),
             ),
-          ProviderListLoaded(:final providers) => RefreshIndicator(
-              onRefresh: () async => context
-                  .read<ProviderListBloc>()
-                  .add(const ProviderListEvent.refreshed()),
-              child: ListView.builder(
-                padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
-                itemCount: providers.length,
-                itemBuilder: (context, index) {
-                  final provider = providers[index];
-                  return ProviderCard(
-                    provider: provider,
-                    onTap: () => context.pushNamed(
-                      AppRoutes.providerDetailName,
-                      pathParameters: {'id': provider.id},
+          ProviderListLoaded(:final providers, :final fromCache) => Column(
+              children: [
+                if (fromCache) const OfflineBanner(),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () async => context
+                        .read<ProviderListBloc>()
+                        .add(const ProviderListEvent.refreshed()),
+                    child: ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
+                      itemCount: providers.length,
+                      itemBuilder: (context, index) {
+                        final provider = providers[index];
+                        return ProviderCard(
+                          provider: provider,
+                          onTap: () => context.pushNamed(
+                            AppRoutes.providerDetailName,
+                            pathParameters: {'id': provider.id},
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
+                  ),
+                ),
+              ],
             ),
         };
       },

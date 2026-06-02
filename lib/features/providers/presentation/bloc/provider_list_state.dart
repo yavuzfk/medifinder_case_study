@@ -7,8 +7,10 @@ part 'provider_list_state.freezed.dart';
 sealed class ProviderListState with _$ProviderListState {
   const factory ProviderListState.initial() = ProviderListInitial;
   const factory ProviderListState.loading() = ProviderListLoading;
-  const factory ProviderListState.loaded(List<Provider> providers) =
-      ProviderListLoaded;
+  const factory ProviderListState.loaded(
+    List<Provider> providers, {
+    @Default(false) bool fromCache,
+  }) = ProviderListLoaded;
   const factory ProviderListState.empty() = ProviderListEmpty;
   const factory ProviderListState.error(String message) = ProviderListError;
 }

@@ -8,6 +8,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox<dynamic>('app');
+  await Hive.openBox<dynamic>('provider_cache');
   await configureDependencies();
   runApp(const MediFinderApp());
 }

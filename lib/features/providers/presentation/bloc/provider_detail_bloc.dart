@@ -35,7 +35,9 @@ class ProviderDetailBloc
     final result = await _getProviderDetail(_id);
     switch (result) {
       case Success(:final data):
-        emit(ProviderDetailState.loaded(data));
+        emit(
+          ProviderDetailState.loaded(data.value, fromCache: data.fromCache),
+        );
       case ResultFailure(:final failure):
         emit(ProviderDetailState.error(_messageFor(failure)));
     }
