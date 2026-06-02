@@ -8,6 +8,8 @@ sealed class ProviderDetailState with _$ProviderDetailState {
   const factory ProviderDetailState.loading() = ProviderDetailLoading;
   const factory ProviderDetailState.error(String message) =
       ProviderDetailError;
-  const factory ProviderDetailState.loaded(Provider provider) =
-      ProviderDetailLoaded;
+  const factory ProviderDetailState.loaded(
+    Provider provider, {
+    @Default(false) bool fromCache,
+  }) = ProviderDetailLoaded;
 }

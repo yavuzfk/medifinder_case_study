@@ -68,9 +68,9 @@ class ProviderListBloc extends Bloc<ProviderListEvent, ProviderListState> {
     switch (result) {
       case Success(:final data):
         emit(
-          data.isEmpty
+          data.value.isEmpty
               ? const ProviderListState.empty()
-              : ProviderListState.loaded(data),
+              : ProviderListState.loaded(data.value, fromCache: data.fromCache),
         );
       case ResultFailure(:final failure):
         emit(ProviderListState.error(_messageFor(failure)));

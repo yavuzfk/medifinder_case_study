@@ -19,3 +19,7 @@ final class ResultFailure<T> extends Result<T> {
   const ResultFailure(this.failure);
   final Failure failure;
 }
+
+/// Bir değeri, cache'ten mi (bayat) yoksa canlı mı geldiği bilgisiyle taşır.
+/// Offline fallback'te UI'a "çevrimdışı" göstergesi sunmak için kullanılır.
+typedef Cached<T> = ({T value, bool fromCache});

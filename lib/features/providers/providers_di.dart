@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:medifinder_case_study/features/providers/data/datasources/provider_local_datasource.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+import 'package:medifinder_case_study/features/providers/data/datasources/provider_cache_datasource.dart';
+import 'package:medifinder_case_study/features/providers/data/datasources/provider_remote_datasource.dart';
 import 'package:medifinder_case_study/features/providers/data/repositories/provider_repository_impl.dart';
 import 'package:medifinder_case_study/features/providers/domain/repositories/provider_repository.dart';
 import 'package:medifinder_case_study/features/providers/domain/usecases/get_filter_options.dart';
@@ -11,11 +13,14 @@ import 'package:medifinder_case_study/features/providers/presentation/bloc/provi
 
 void registerProvidersFeature(GetIt gh) {
   gh
-    ..registerLazySingleton<ProviderLocalDataSource>(
-      ProviderLocalDataSourceImpl.new,
+    ..registerLazySingleton<ProviderRemoteDataSource>(
+      ProviderRemoteDataSourceImpl.new,
+    )
+    ..registerLazySingleton<ProviderCacheDataSource>(
+      () => HiveProviderCacheDataSource(Hive.box<dynamic>('provider_cache')),
     )
     ..registerLazySingleton<ProviderRepository>(
-      () => ProviderRepositoryImpl(gh()),
+      () => ProviderRepositoryImpl(gh(), gh()),
     )
     ..registerFactory(() => GetProviders(gh()))
     ..registerFactory(() => GetProviderDetail(gh()))

@@ -2,7 +2,7 @@ import 'package:medifinder_case_study/core/error/exceptions.dart';
 import 'package:medifinder_case_study/features/providers/data/models/provider_model.dart';
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
 
-abstract interface class ProviderLocalDataSource {
+abstract interface class ProviderRemoteDataSource {
   Future<List<ProviderModel>> getProviders(ProviderFilter filter);
   Future<ProviderModel> getProviderById(String id);
 }
@@ -12,8 +12,8 @@ abstract interface class ProviderLocalDataSource {
 /// - shouldFail → throw → error/retry state'i demo edilebilir + testte hata mapping
 /// - filtre kombinasyonu → boş sonuç → empty state
 /// Veri setinde bilinçli null alanlar var → detail'de null handling.
-class ProviderLocalDataSourceImpl implements ProviderLocalDataSource {
-  ProviderLocalDataSourceImpl({
+class ProviderRemoteDataSourceImpl implements ProviderRemoteDataSource {
+  ProviderRemoteDataSourceImpl({
     this.latency = const Duration(milliseconds: 700),
     this.shouldFail = false,
   });
@@ -29,7 +29,7 @@ class ProviderLocalDataSourceImpl implements ProviderLocalDataSource {
       throw const ServerException('Failed to load providers');
     }
     final all = _rawProviders.map(ProviderModel.fromJson).toList();
-    return all.where((p) => _matches(p, filter)).toList();
+    return all.where((p) => providerMatchesFilter(p, filter)).toList();
   }
 
   @override
@@ -45,22 +45,23 @@ class ProviderLocalDataSourceImpl implements ProviderLocalDataSource {
     }
     return match.first;
   }
+}
 
-  bool _matches(ProviderModel p, ProviderFilter f) {
-    final q = f.query.trim().toLowerCase();
-    final matchesQuery = q.isEmpty ||
-        p.name.toLowerCase().contains(q) ||
-        p.category.toLowerCase().contains(q);
-    final matchesType = f.type == null || p.type == f.type!.name;
-    final matchesCountry = f.country == null || p.country == f.country;
-    final matchesCity = f.city == null || p.city == f.city;
-    final matchesCategory = f.category == null || p.category == f.category;
-    return matchesQuery &&
-        matchesType &&
-        matchesCountry &&
-        matchesCity &&
-        matchesCategory;
-  }
+/// Hem mock remote hem de offline cache fallback'i aynı kuralla filtreler.
+bool providerMatchesFilter(ProviderModel p, ProviderFilter f) {
+  final q = f.query.trim().toLowerCase();
+  final matchesQuery = q.isEmpty ||
+      p.name.toLowerCase().contains(q) ||
+      p.category.toLowerCase().contains(q);
+  final matchesType = f.type == null || p.type == f.type!.name;
+  final matchesCountry = f.country == null || p.country == f.country;
+  final matchesCity = f.city == null || p.city == f.city;
+  final matchesCategory = f.category == null || p.category == f.category;
+  return matchesQuery &&
+      matchesType &&
+      matchesCountry &&
+      matchesCity &&
+      matchesCategory;
 }
 
 const _rawProviders = <Map<String, dynamic>>[

@@ -8,6 +8,7 @@ import 'package:medifinder_case_study/features/providers/domain/entities/provide
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_bloc.dart';
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_event.dart';
 import 'package:medifinder_case_study/features/providers/presentation/bloc/provider_detail_state.dart';
+import 'package:medifinder_case_study/features/providers/presentation/widgets/offline_banner.dart';
 import 'package:medifinder_case_study/features/providers/presentation/widgets/provider_type_x.dart';
 
 class ProviderDetailPage extends StatelessWidget {
@@ -36,8 +37,8 @@ class ProviderDetailPage extends StatelessWidget {
                       .read<ProviderDetailBloc>()
                       .add(const ProviderDetailEvent.retried()),
                 ),
-              ProviderDetailLoaded(:final provider) =>
-                ProviderDetailContent(provider: provider),
+              ProviderDetailLoaded(:final provider, :final fromCache) =>
+                ProviderDetailContent(provider: provider, fromCache: fromCache),
             };
           },
         ),
@@ -49,9 +50,14 @@ class ProviderDetailPage extends StatelessWidget {
 /// Bloc'tan bağımsız, saf görünüm. Null-handling'i widget testiyle
 /// doğrulanabilir kılmak için ayrıldı.
 class ProviderDetailContent extends StatelessWidget {
-  const ProviderDetailContent({required this.provider, super.key});
+  const ProviderDetailContent({
+    required this.provider,
+    this.fromCache = false,
+    super.key,
+  });
 
   final Provider provider;
+  final bool fromCache;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +77,7 @@ class ProviderDetailContent extends StatelessWidget {
       padding: EdgeInsets.zero,
       children: [
         _Hero(provider: p),
+        if (fromCache) const OfflineBanner(),
         const SizedBox(height: 16),
         _Section(
           title: 'Konum',

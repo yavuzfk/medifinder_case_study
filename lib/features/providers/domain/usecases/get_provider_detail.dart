@@ -6,6 +6,6 @@ class GetProviderDetail {
   const GetProviderDetail(this._repository);
   final ProviderRepository _repository;
 
-  Future<Result<Provider>> call(String id) =>
+  Future<Result<Cached<Provider>>> call(String id) =>
       _repository.getProviderById(id);
 }

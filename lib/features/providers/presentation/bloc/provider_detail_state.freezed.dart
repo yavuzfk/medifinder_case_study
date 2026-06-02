@@ -122,12 +122,12 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( String message)?  error,TResult Function( Provider provider)?  loaded,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( String message)?  error,TResult Function( Provider provider,  bool fromCache)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case ProviderDetailLoading() when loading != null:
 return loading();case ProviderDetailError() when error != null:
 return error(_that.message);case ProviderDetailLoaded() when loaded != null:
-return loaded(_that.provider);case _:
+return loaded(_that.provider,_that.fromCache);case _:
   return orElse();
 
 }
@@ -145,12 +145,12 @@ return loaded(_that.provider);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( String message)  error,required TResult Function( Provider provider)  loaded,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( String message)  error,required TResult Function( Provider provider,  bool fromCache)  loaded,}) {final _that = this;
 switch (_that) {
 case ProviderDetailLoading():
 return loading();case ProviderDetailError():
 return error(_that.message);case ProviderDetailLoaded():
-return loaded(_that.provider);}
+return loaded(_that.provider,_that.fromCache);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -164,12 +164,12 @@ return loaded(_that.provider);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( String message)?  error,TResult? Function( Provider provider)?  loaded,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( String message)?  error,TResult? Function( Provider provider,  bool fromCache)?  loaded,}) {final _that = this;
 switch (_that) {
 case ProviderDetailLoading() when loading != null:
 return loading();case ProviderDetailError() when error != null:
 return error(_that.message);case ProviderDetailLoaded() when loaded != null:
-return loaded(_that.provider);case _:
+return loaded(_that.provider,_that.fromCache);case _:
   return null;
 
 }
@@ -279,10 +279,11 @@ as String,
 
 
 class ProviderDetailLoaded implements ProviderDetailState {
-  const ProviderDetailLoaded(this.provider);
+  const ProviderDetailLoaded(this.provider, {this.fromCache = false});
   
 
  final  Provider provider;
+@JsonKey() final  bool fromCache;
 
 /// Create a copy of ProviderDetailState
 /// with the given fields replaced by the non-null parameter values.
@@ -294,16 +295,16 @@ $ProviderDetailLoadedCopyWith<ProviderDetailLoaded> get copyWith => _$ProviderDe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProviderDetailLoaded&&(identical(other.provider, provider) || other.provider == provider));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProviderDetailLoaded&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.fromCache, fromCache) || other.fromCache == fromCache));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,provider);
+int get hashCode => Object.hash(runtimeType,provider,fromCache);
 
 @override
 String toString() {
-  return 'ProviderDetailState.loaded(provider: $provider)';
+  return 'ProviderDetailState.loaded(provider: $provider, fromCache: $fromCache)';
 }
 
 
@@ -314,7 +315,7 @@ abstract mixin class $ProviderDetailLoadedCopyWith<$Res> implements $ProviderDet
   factory $ProviderDetailLoadedCopyWith(ProviderDetailLoaded value, $Res Function(ProviderDetailLoaded) _then) = _$ProviderDetailLoadedCopyWithImpl;
 @useResult
 $Res call({
- Provider provider
+ Provider provider, bool fromCache
 });
 
 
@@ -331,10 +332,11 @@ class _$ProviderDetailLoadedCopyWithImpl<$Res>
 
 /// Create a copy of ProviderDetailState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? provider = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? provider = null,Object? fromCache = null,}) {
   return _then(ProviderDetailLoaded(
 null == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
-as Provider,
+as Provider,fromCache: null == fromCache ? _self.fromCache : fromCache // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

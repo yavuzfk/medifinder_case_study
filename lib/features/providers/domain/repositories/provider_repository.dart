@@ -4,7 +4,7 @@ import 'package:medifinder_case_study/features/providers/domain/entities/provide
 import 'package:medifinder_case_study/features/providers/domain/entities/provider_filter.dart';
 
 abstract interface class ProviderRepository {
-  Future<Result<List<Provider>>> getProviders(ProviderFilter filter);
-  Future<Result<Provider>> getProviderById(String id);
+  Future<Result<Cached<List<Provider>>>> getProviders(ProviderFilter filter);
+  Future<Result<Cached<Provider>>> getProviderById(String id);
   Future<Result<FilterOptions>> getFilterOptions();
 }
